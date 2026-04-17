@@ -24,6 +24,21 @@ test('users can authenticate using the login screen', function () {
     $this->assertAuthenticated();
 });
 
+test('users can authenticate using username', function () {
+    $user = User::factory()->create();
+
+    $response = $this->post(r   oute('login.store'), [
+        'email' => $user->username,
+        'password' => 'password',
+    ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('dashboard', absolute: false));
+
+    $this->assertAuthenticated();
+});
+
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
