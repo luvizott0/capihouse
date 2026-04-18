@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostComment> $comments
+ * @property-read \App\Models\Feeling|null $feeling
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\hashtag> $hashtags
+ * @property-read int|null $hashtags_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostLike> $likes
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
@@ -84,6 +87,14 @@ class Post extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(PostComment::class);
+    }
+
+    /**
+     * Get feeling associated with the post.
+     */
+    public function feeling(): BelongsTo
+    {
+        return $this->belongsTo(Feeling::class);
     }
 
     /**

@@ -10,6 +10,8 @@
     --font-mono: 'Courier New', Courier, monospace;
 
     --color-border: #D8CDC5;
+    --color-subtitle: #847062;
+
     --color-primary-50: #f8f6f1;
     --color-primary-100: #fdf8f3;
     --color-primary-200: #e8c9a5;
@@ -33,6 +35,11 @@
     --color-zinc-800: #262626;
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
+}
+
+::placeholder {
+    color: #847062;
+    opacity: 1; /* Ensures full visibility in Firefox */
 }
 
 

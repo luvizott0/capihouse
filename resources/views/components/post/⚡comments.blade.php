@@ -48,6 +48,7 @@ new class extends Component {
         ]);
 
         $this->dispatch('loadComments');
+        $this->dispatch('post-comments-updated', postId: $this->post->id);
 
         $this->reset('comment');
     }
@@ -59,6 +60,7 @@ new class extends Component {
         $comment->delete();
 
         $this->dispatch('loadComments');
+        $this->dispatch('post-comments-updated', postId: $this->post->id);
     }
 };
 ?>

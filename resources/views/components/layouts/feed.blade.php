@@ -9,7 +9,7 @@
     @livewireStyles
     <style>
         @keyframes marquee {
-            0% { transform: translateX(50%); }
+            0% { transform: translateX(80%); }
             100% { transform: translateX(-100%); }
         }
         .animate-marquee { animation: marquee 12s linear infinite; }
@@ -32,11 +32,11 @@
 
         {{-- Search Bar --}}
         <div class="relative mt-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-5 h-5 left-3 top-2.5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-5 h-5 left-3 top-2.5 text-subtitle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input
                 type="text"
                 placeholder="{{ __('Pesquisar posts...') }}"
-                class="w-full py-2 pl-10 pr-4 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400"
+                class="w-full py-2 pl-10 pr-4 text-sm font-medium text-subtitle border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400"
                 readonly
             />
         </div>
