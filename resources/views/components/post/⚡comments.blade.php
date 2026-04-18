@@ -70,7 +70,7 @@ new class extends Component {
                 <livewire:user-avatar size="6" text-size="xs"/>
                 <div class="flex flex-col bg-[#EAE7E1] w-full py-1 px-3 rounded-sm border border-[#D5C5B9]">
                     <span class="text-sm font-bold text-primary-800">{{ $comment->user->name }}</span>
-                    <span class="text-sm">{{ $comment->content }}</span>
+                    <span class="text-sm break-all">{{ $comment->content }}</span>
 
                     <div class="text-end">
                         <button class="cursor-pointer">
