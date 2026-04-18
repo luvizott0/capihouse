@@ -79,9 +79,7 @@ new class extends Component
     <div class="p-4">
         {{-- User Info --}}
         <div class="flex items-center gap-3 mb-3">
-            <div class="flex items-center justify-center w-10 h-10 text-sm font-bold text-white bg-primary">
-                {{ $user->initials() }}
-            </div>
+            <livewire:user-avatar />
             <div>
                 <p class="text-sm font-bold text-primary-800">{{ $user->name }}</p>
                 <p class="text-xs text-primary-500">{{ '@' . $user->username }}</p>
