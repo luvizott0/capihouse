@@ -91,7 +91,7 @@ new class extends Component {
 
     <div class="flex items-start gap-2 mt-3">
         <div class="w-full">
-            <x-forms.input wire:model.live="comment" placeholder="{{ __('Deixe um comentário...') }}" max="500"/>
+            <x-forms.comment-field wire:model.live="comment" placeholder="{{ __('Deixe um comentário...') }}" max="500"/>
         </div>
 
         <button wire:click="send" class="bg-primary px-4 py-0.5 rounded-sm cursor-pointer">
