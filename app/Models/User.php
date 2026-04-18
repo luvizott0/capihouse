@@ -30,6 +30,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $two_factor_confirmed_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostComment> $postComments
+ * @property-read int|null $post_comments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostLike> $postLikes
  * @property-read int|null $post_likes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post> $posts
@@ -91,6 +93,14 @@ class User extends Authenticatable
     public function postLikes(): HasMany
     {
         return $this->hasMany(PostLike::class);
+    }
+
+    /**
+     * Get comments authored by user.
+     */
+    public function postComments(): HasMany
+    {
+        return $this->hasMany(PostComment::class);
     }
 
     /**

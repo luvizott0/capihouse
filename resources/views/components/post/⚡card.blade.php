@@ -18,6 +18,8 @@ new class extends Component
 
     public bool $isLiked;
 
+    public bool $commentsOpen = false;
+
     public function mount(): void
     {
         $this->loadPostInformation();
@@ -77,7 +79,7 @@ new class extends Component
     <div class="p-4">
         {{-- User Info --}}
         <div class="flex items-center gap-3 mb-3">
-            <div class="flex items-center justify-center w-10 h-10 text-sm font-bold text-white bg-primary-300">
+            <div class="flex items-center justify-center w-10 h-10 text-sm font-bold text-white bg-primary">
                 {{ $user->initials() }}
             </div>
             <div>
@@ -154,13 +156,19 @@ new class extends Component
 
                 <span>{{ $post->getLikesCount() }}</span>
             </button>
-            <button class="flex items-center gap-1 text-sm text-primary-600 hover:text-primary-800 transition">
+            <button wire:click="$toggle('commentsOpen')" class="flex items-center gap-1 text-sm text-primary-600 hover:text-primary-800 cursor-pointer transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                <span>{{ $post->comments_count }}</span>
+                <span>{{ $post->getCommentsCount() }}</span>
             </button>
             <button class="flex items-center gap-1 text-sm text-primary-600 hover:text-primary-800 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0-12.814a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0 12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/></svg>
             </button>
+        </div>
+
+        <div>
+            @if($commentsOpen)
+                <livewire:post.comments :post="$post" />
+            @endif
         </div>
     </div>
 </div>
