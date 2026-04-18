@@ -15,17 +15,17 @@
         .animate-marquee { animation: marquee 12s linear infinite; }
     </style>
 </head>
-<body class="flex flex-col h-screen font-mono bg-primary-50">
+<body class="flex flex-col h-screen font-sans bg-primary-50">
     {{-- Top Header --}}
     <header class="sticky top-0 z-50 px-4 py-3 bg-white border-b border-primary-200">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <img src="{{ asset('capihouse-logo.png') }}" alt="CapiHouse" class="w-8 h-8">
-                <span class="text-lg font-bold text-primary-800">CapiHouse</span>
+                <span class="text-lg font-bold font-mono text-primary-800">CapiHouse</span>
             </div>
             <div class="overflow-hidden max-w-[60%]">
             <span class="inline-block text-sm font-bold whitespace-nowrap text-primary animate-marquee">
-                ★ {{ __('Bem-vindo de volta, :name!', ['name' => Auth::user()->name]) }} ★
+                ★ {{ __('Olá, :name!', ['name' => Auth::user()->name]) }} ★ Novidades no Feed ★
             </span>
             </div>
         </div>
