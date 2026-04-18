@@ -36,7 +36,7 @@
             <input
                 type="text"
                 placeholder="{{ __('Pesquisar posts...') }}"
-                class="w-full py-2 pl-10 pr-4 text-sm border-2 rounded-xs border-primary-50 bg-primary-100 focus:outline-none focus:border-primary-400"
+                class="w-full py-2 pl-10 pr-4 text-sm border rounded-xs border-border bg-primary-100 focus:outline-none focus:border-primary-400"
                 readonly
             />
         </div>

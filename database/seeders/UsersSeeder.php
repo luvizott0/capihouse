@@ -15,12 +15,14 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
+            'name' => 'Calebe Luvizotto',
             'username' => 'luvizotto',
             'password' => 'password',
             'status' => \App\Enums\UserStatuses::APPROVED,
         ]);
 
         User::factory()->create([
+            'name' => 'Rogeria Capivara',
             'username' => 'capivara.rogeria',
             'password' => 'password',
             'status' => \App\Enums\UserStatuses::APPROVED,
