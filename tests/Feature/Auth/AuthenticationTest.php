@@ -19,7 +19,7 @@ test('users can authenticate using the login screen', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect(route('feed', absolute: false));
 
     $this->assertAuthenticated();
 });
@@ -27,14 +27,14 @@ test('users can authenticate using the login screen', function () {
 test('users can authenticate using username', function () {
     $user = User::factory()->create();
 
-    $response = $this->post(r   oute('login.store'), [
+    $response = $this->post(route('login.store'), [
         'email' => $user->username,
         'password' => 'password',
     ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect(route('feed', absolute: false));
 
     $this->assertAuthenticated();
 });
