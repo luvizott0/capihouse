@@ -18,7 +18,7 @@ test('authenticated users can visit the feed', function () {
 
 test('feed displays posts', function () {
     $user = User::factory()->create();
-    $post = Post::factory()->for($user)->create(['body' => 'Olha essa capivara!']);
+    $post = Post::factory()->for($user)->create(['content' => 'Olha essa capivara!']);
 
     $this->actingAs($user)
         ->get(route('feed'))

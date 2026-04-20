@@ -20,7 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'body' => fake()->paragraph(),
+            'content' => fake()->paragraph(),
             'media' => null,
             'likes_count' => fake()->numberBetween(0, 50),
             'comments_count' => fake()->numberBetween(0, 20),
