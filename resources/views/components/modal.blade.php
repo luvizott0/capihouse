@@ -20,7 +20,7 @@
 @endphp
 
 <div
-    x-data="{ show: @js($show) }"
+    x-data="{ show: false }"
     x-show="show"
     x-on:keydown.escape.window="$dispatch('{{ $closeEvent }}');show = false"
     x-on:{{ $closeEvent }}.window="show = false"

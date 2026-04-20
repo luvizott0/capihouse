@@ -2,7 +2,6 @@
 
 use App\Models\Hashtag;
 use App\Models\Post;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -77,12 +76,6 @@ new class extends Component {
         $this->dispatch('post::close-modal');
     }
 
-    #[On('post::create')]
-    #[On('post::close-modal')]
-    public function resetForm(): void
-    {
-        $this->reset('content', 'hashtags', 'hashtag');
-    }
 };
 ?>
 
