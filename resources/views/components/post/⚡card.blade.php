@@ -92,7 +92,7 @@ new class extends Component {
 
     <div class="p-4">
         {{-- User Info --}}
-        <livewire:user-avatar/>
+        <x-user-info :user="$user" />
         {{-- Body Text --}}
         @if ($post->content)
             <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->content }}</p>
@@ -102,7 +102,7 @@ new class extends Component {
             <div class="flex flex-wrap gap-2 mb-3">
                 @foreach ($post->hashtags as $hashtag)
                     <span
-                        class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white rounded-full bg-primary-600">
+                        class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white  bg-primary-600">
                         #{{ $hashtag->name }}
                     </span>
                 @endforeach

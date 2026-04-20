@@ -3,9 +3,8 @@
 use App\Models\Post;
 use App\Models\PostComment;
 use Illuminate\Support\Collection;
-use Livewire\Attributes\Validate;
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 new class extends Component {
     public Post $post;
@@ -13,6 +12,10 @@ new class extends Component {
     public Collection $comments;
 
     public ?string $comment = null;
+
+    public ?int $editingCommentId = null;
+
+    public ?string $editingComment = null;
 
     public function mount(): void
     {
@@ -53,9 +56,55 @@ new class extends Component {
         $this->reset('comment');
     }
 
+    public function startEditing(int $id): void
+    {
+        $comment = $this->post->comments()->findOrFail($id);
+
+        if ($comment->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $this->editingCommentId = $comment->id;
+        $this->editingComment = $comment->content;
+    }
+
+    public function cancelEditing(): void
+    {
+        $this->reset(['editingCommentId', 'editingComment']);
+    }
+
+    public function saveEditing(): void
+    {
+        if ($this->editingCommentId === null) {
+            return;
+        }
+
+        $this->validate([
+            'editingComment' => ['required', 'string', 'max:100'],
+        ]);
+
+        $comment = $this->post->comments()->findOrFail($this->editingCommentId);
+
+        if ($comment->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $comment->update([
+            'content' => $this->editingComment,
+        ]);
+
+        $this->cancelEditing();
+        $this->dispatch('loadComments');
+        $this->dispatch('post-comments-updated', postId: $this->post->id);
+    }
+
     public function deleteComment(int $id): void
     {
-        $comment = PostComment::find($id);
+        $comment = $this->post->comments()->findOrFail($id);
+
+        if ($comment->user_id !== auth()->id()) {
+            abort(403);
+        }
 
         $comment->delete();
 
@@ -69,25 +118,52 @@ new class extends Component {
     <div class="mt-4">
         @foreach($comments as $comment)
             <div class="flex items-start gap-2 mb-2">
-                <livewire:user-avatar size="6" text-size="xs" :show-name="false"/>
+                <x-user-info size="6" text-size="xs" :show-name="false" :user="$comment->user"/>
                 <div class="flex flex-col bg-[#EAE7E1] w-full p-1 px-3 rounded-sm border border-[#D5C5B9]">
                     <div class="flex items-center justify-between">
                         <span class="text-sm font-bold text-primary-800">{{ $comment->user->name }}</span>
 
-                        <div class="text-end">
-                            <button class="cursor-pointer">
-                                <p class="text-xs text-primary-800 font-bold underline">
-                                    Editar
-                                </p>
-                            </button>
-                            <button wire:click="deleteComment({{ $comment->id }})" class="cursor-pointer">
-                                <p class="text-xs text-primary-800 font-bold underline">
-                                    Deletar
-                                </p>
-                            </button>
-                        </div>
+                        @if(auth()->id() === $comment->user_id)
+                            <div class="text-end">
+                                @if($editingCommentId === $comment->id)
+                                    <button wire:click="saveEditing" class="cursor-pointer">
+                                        <p class="text-xs text-primary-800 font-bold underline">
+                                            Salvar
+                                        </p>
+                                    </button>
+                                    <button wire:click="cancelEditing" class="cursor-pointer">
+                                        <p class="text-xs text-primary-800 font-bold underline">
+                                            Cancelar
+                                        </p>
+                                    </button>
+                                @else
+                                    <button wire:click="startEditing({{ $comment->id }})" class="cursor-pointer">
+                                        <p class="text-xs text-primary-800 font-bold underline">
+                                            Editar
+                                        </p>
+                                    </button>
+                                    <button wire:click="deleteComment({{ $comment->id }})" class="cursor-pointer">
+                                        <p class="text-xs text-primary-800 font-bold underline">
+                                            Deletar
+                                        </p>
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
                     </div>
-                    <span class="text-sm break-all">{{ $comment->content }}</span>
+
+                    @if($editingCommentId === $comment->id)
+                        <textarea
+                            wire:model.live="editingComment"
+                            rows="3"
+                            class="text-sm mt-1 p-2 border border-[#D5C5B9] rounded-sm resize-none"
+                        ></textarea>
+                        @error('editingComment')
+                            <span class="text-xs text-red-600 mt-1">{{ $message }}</span>
+                        @enderror
+                    @else
+                        <span class="text-sm break-all">{{ $comment->content }}</span>
+                    @endif
                 </div>
             </div>
         @endforeach

@@ -95,7 +95,7 @@ new class extends Component {
         action="createPost"
     >
         <div>
-            <livewire:user-avatar/>
+            <x-user-info />
             <textarea
                 placeholder="O que você está pensando?"
                 wire:model="content"
