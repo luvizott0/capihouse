@@ -94,8 +94,19 @@ new class extends Component {
         {{-- User Info --}}
         <livewire:user-avatar/>
         {{-- Body Text --}}
-        @if ($post->body)
-            <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->body }}</p>
+        @if ($post->content)
+            <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->content }}</p>
+        @endif
+
+        @if ($post->hashtags->count() > 0)
+            <div class="flex flex-wrap gap-2 mb-3">
+                @foreach ($post->hashtags as $hashtag)
+                    <span
+                        class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white rounded-full bg-primary-600">
+                        #{{ $hashtag->name }}
+                    </span>
+                @endforeach
+            </div>
         @endif
 
         {{-- Media --}}

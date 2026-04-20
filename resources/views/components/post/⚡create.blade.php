@@ -17,7 +17,15 @@ new class extends Component {
     {
         return [
             'content' => ['nullable', 'string', 'max:2000'],
-            'hashtag' => ['nullable', 'string', 'max:10'],
+            'hashtag' => ['nullable', 'string', 'max:20'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'content.max' => 'O conteúdo do post deve conter no máximo 2000 caracteres.',
+            'hashtag.max' => 'A hashtag deve conter no máximo 25 caracteres.',
         ];
     }
 
@@ -29,6 +37,8 @@ new class extends Component {
     public function addHashtag(): void
     {
         $hashtag = trim($this->hashtag ?? '');
+
+        $this->validateOnly('hashtag');
 
         if ($hashtag === '') {
             return;
@@ -57,15 +67,17 @@ new class extends Component {
             'content' => $this->content,
         ]);
 
-        // Attach hashtags to the post
         foreach ($this->hashtags as $hashtagName) {
             $hashtag = Hashtag::firstOrCreate(['name' => $hashtagName]);
             $post->hashtags()->attach($hashtag);
         }
 
         $this->reset('content', 'hashtags', 'hashtag');
+        $this->dispatch('posts::reload');
+        $this->dispatch('post::close-modal');
     }
 
+    #[On('post::create')]
     #[On('post::close-modal')]
     public function resetForm(): void
     {
@@ -80,6 +92,7 @@ new class extends Component {
         close-event="post::close-modal"
         title="Criar Post"
         action-label="Publicar"
+        action="createPost"
     >
         <div>
             <livewire:user-avatar/>

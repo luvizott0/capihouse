@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,23 +15,24 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property int $user_id
- * @property string|null $body
+ * @property string|null $content
  * @property array<array-key, mixed>|null $media
  * @property-read int|null $likes_count
  * @property-read int|null $comments_count
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostComment> $comments
- * @property-read \App\Models\Feeling|null $feeling
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\hashtag> $hashtags
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Collection<int, PostComment> $comments
+ * @property-read Feeling|null $feeling
+ * @property-read Collection<int, hashtag> $hashtags
  * @property-read int|null $hashtags_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PostLike> $likes
- * @property-read \App\Models\User $user
+ * @property-read Collection<int, PostLike> $likes
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCommentsCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereId($value)
@@ -37,9 +40,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereMedia($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
+ *
  * @mixin \Eloquent
  */
-#[Fillable(['user_id', 'body', 'media'])]
+#[Fillable(['user_id', 'content', 'media'])]
 class Post extends Model
 {
     /** @use HasFactory<PostFactory> */
