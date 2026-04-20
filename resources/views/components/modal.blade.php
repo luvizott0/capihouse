@@ -22,7 +22,7 @@
 <div
     x-data="{ show: @js($show) }"
     x-show="show"
-    x-on:keydown.escape.window="show = false"
+    x-on:keydown.escape.window="$dispatch('{{ $closeEvent }}');show = false"
     x-on:{{ $closeEvent }}.window="show = false"
     x-on:{{ $openEvent }}.window="show = true"
     class="fixed inset-0 overflow-hidden"
@@ -38,7 +38,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         class="fixed inset-0 bg-black/50 backdrop-blur-sm"
-        @click="show = false"
+        @click="$dispatch('{{ $closeEvent }}');show = false"
     ></div>
 
     <div
@@ -50,7 +50,7 @@
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 translate-y-4"
         class="fixed inset-0 z-50 flex items-center justify-center p-4"
-        @click.self="$dispatch('cancel'); show = false"
+        @click.self="$dispatch('{{ $closeEvent }}');$dispatch('cancel'); show = false"
     >
         <div class="bg-white border-border rounded-sm {{ $maxWidthClass }} w-full relative shadow-xl" @click.stop>
             <div class="bg-primary px-4 py-2 flex justify-between items-center">

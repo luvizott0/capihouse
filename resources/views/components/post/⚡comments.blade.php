@@ -69,23 +69,25 @@ new class extends Component {
     <div class="mt-4">
         @foreach($comments as $comment)
             <div class="flex items-start gap-2 mb-2">
-                <livewire:user-avatar size="6" text-size="xs"/>
-                <div class="flex flex-col bg-[#EAE7E1] w-full py-1 px-3 rounded-sm border border-[#D5C5B9]">
-                    <span class="text-sm font-bold text-primary-800">{{ $comment->user->name }}</span>
-                    <span class="text-sm break-all">{{ $comment->content }}</span>
+                <livewire:user-avatar size="6" text-size="xs" :show-name="false"/>
+                <div class="flex flex-col bg-[#EAE7E1] w-full p-1 px-3 rounded-sm border border-[#D5C5B9]">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-bold text-primary-800">{{ $comment->user->name }}</span>
 
-                    <div class="text-end">
-                        <button class="cursor-pointer">
-                            <p class="text-sm text-primary-800 font-bold underline">
-                                Editar
-                            </p>
-                        </button>
-                        <button wire:click="deleteComment({{ $comment->id }})" class="cursor-pointer">
-                            <p class="text-sm text-primary-800 font-bold underline">
-                                Deletar
-                            </p>
-                        </button>
+                        <div class="text-end">
+                            <button class="cursor-pointer">
+                                <p class="text-xs text-primary-800 font-bold underline">
+                                    Editar
+                                </p>
+                            </button>
+                            <button wire:click="deleteComment({{ $comment->id }})" class="cursor-pointer">
+                                <p class="text-xs text-primary-800 font-bold underline">
+                                    Deletar
+                                </p>
+                            </button>
+                        </div>
                     </div>
+                    <span class="text-sm break-all">{{ $comment->content }}</span>
                 </div>
             </div>
         @endforeach
