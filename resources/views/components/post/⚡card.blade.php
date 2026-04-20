@@ -92,14 +92,7 @@ new class extends Component {
 
     <div class="p-4">
         {{-- User Info --}}
-        <div class="flex items-center gap-3 mb-3">
-            <livewire:user-avatar/>
-            <div>
-                <p class="text-sm font-bold text-primary-800">{{ $user->name }}</p>
-                <p class="text-xs text-subtitle">{{ '@' . $user->username }}</p>
-            </div>
-        </div>
-
+        <livewire:user-avatar/>
         {{-- Body Text --}}
         @if ($post->body)
             <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->body }}</p>

@@ -47,11 +47,8 @@
         {{ $slot }}
     </main>
 
-    {{-- FAB --}}
-    <a href="#" class="fixed z-50 flex items-center justify-center text-2xl text-white rounded-full shadow-lg w-14 h-14 bottom-24 right-4 bg-primary hover:bg-primary-500">+</a>
-
     {{-- Bottom Navigation --}}
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-primary-200">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-primary-200">
         <div class="flex items-center justify-around py-2">
             <a href="{{ route('feed') }}" class="flex flex-col items-center gap-1 px-4 py-1 {{ request()->routeIs('feed') ? 'text-primary' : 'text-primary-400' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>

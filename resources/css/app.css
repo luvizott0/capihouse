@@ -46,3 +46,26 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-mono);
 }
+
+.btn-primary {
+    cursor: pointer;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    padding: .5rem 1rem;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-400);
+    border-color: var(--color-primary-400);
+}
+
+.btn-primary:disabled {
+    background-color: var(--color-primary-400);
+    border-color: var(--color-primary-400);
+    cursor: not-allowed;
+}
