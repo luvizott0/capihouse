@@ -19,6 +19,7 @@ new class extends Component {
         return [
             'content' => ['nullable', 'string', 'max:2000'],
             'hashtag' => ['nullable', 'string', 'max:20'],
+            'feeling' => ['required', 'string', 'max:10'],
         ];
     }
 
@@ -66,6 +67,10 @@ new class extends Component {
         /** @var Post $post */
         $post = auth()->user()->posts()->create([
             'content' => $this->content,
+        ]);
+
+        $post->feeling()->create([
+            'name' => $this->feeling,
         ]);
 
         foreach ($this->hashtags as $hashtagName) {
@@ -127,6 +132,8 @@ new class extends Component {
                     <x-forms.comment-field
                         wire:model="feeling"
                         placeholder="Me sentindo..."
+                        max="10"
+                        counter-position="side"
                     />
                 </div>
 
