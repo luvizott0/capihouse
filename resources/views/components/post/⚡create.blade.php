@@ -11,6 +11,8 @@ new class extends Component {
 
     public ?string $feeling = null;
 
+    public ?string $emoji = null;
+
     /** @var array<int, string> */
     public array $hashtags = [];
 
@@ -71,6 +73,8 @@ new class extends Component {
 
         $post->feeling()->create([
             'name' => $this->feeling,
+            'color' => '#A66130',
+            'emoji' => $this->emoji ?? '🙂',
         ]);
 
         foreach ($this->hashtags as $hashtagName) {
@@ -78,7 +82,7 @@ new class extends Component {
             $post->hashtags()->attach($hashtag);
         }
 
-        $this->reset('content', 'hashtags', 'hashtag');
+        $this->reset('content', 'hashtags', 'hashtag', 'emoji');
         $this->dispatch('posts::reload');
         $this->dispatch('post::close-modal');
     }
@@ -91,6 +95,7 @@ new class extends Component {
         open-event="post::create"
         close-event="post::close-modal"
         title="Criar Post"
+        max-width="lg"
     >
         <div>
             <x-user-info />
@@ -128,7 +133,17 @@ new class extends Component {
             </div>
 
             <div class="flex justify-between items-center gap-2 mt-6">
-                <div>
+                <div class="flex gap-2  items-center">
+                    <div>
+                        <x-forms.emoji-picker target="emoji" button-label="Emoji" />
+
+                        @if ($emoji)
+                            <p class="mt-1 text-xs text-primary-700">
+                                Emoji selecionado: {{ $emoji }}
+                            </p>
+                        @endif
+                    </div>
+
                     <x-forms.comment-field
                         wire:model="feeling"
                         placeholder="Me sentindo..."

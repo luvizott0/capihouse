@@ -93,7 +93,7 @@
                         'required' => $required,
                         'maxlength' => $max,
                     ])->class([
-                        'w-full resize-none overflow-hidden py-1.5 px-2.5 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400',
+                        'w-full resize-none overflow-hidden py-1.5 px-2.5 text-sm border border-border bg-primary-100 focus:outline-none focus:border-primary-400',
                         'text-xs' => $xs,
                         'text-sm' => $sm,
                         'text-base' => $md,
@@ -122,7 +122,7 @@
                     'placeholder' => $placeholder,
                     'required' => $required,
                 ])->class([
-                    'w-full resize-none overflow-hidden py-1.5 px-2.5 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400',
+                    'w-full resize-none overflow-hidden py-1.5 px-2.5 text-sm border border-border bg-primary-100 focus:outline-none focus:border-primary-400',
                     'text-xs' => $xs,
                     'text-sm' => $sm,
                     'text-base' => $md,
