@@ -19,7 +19,7 @@
 
 <div>
     @if($label)
-        <p class="text-sm my-1">Adicionar Hashtag</p>
+        <p class="text-sm my-1">{{ $label }}</p>
     @endif
     <input
         {{

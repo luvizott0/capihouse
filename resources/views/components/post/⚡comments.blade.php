@@ -117,7 +117,7 @@ new class extends Component {
 <div>
     <div class="mt-4">
         @foreach($comments as $comment)
-            <div class="flex items-start gap-2 mb-2">
+            <div class="flex items-start gap-1 mb-2">
                 <x-user-info size="6" text-size="xs" :show-name="false" :user="$comment->user"/>
                 <div class="flex flex-col bg-[#EAE7E1] w-full p-1 px-3 rounded-sm border border-[#D5C5B9]">
                     <div class="flex items-center justify-between">
@@ -155,8 +155,8 @@ new class extends Component {
                     @if($editingCommentId === $comment->id)
                         <textarea
                             wire:model.live="editingComment"
-                            rows="3"
-                            class="text-sm mt-1 p-2 border border-[#D5C5B9] rounded-sm resize-none"
+                            rows="1"
+                            class="text-sm mt-1 px-2 py-1 border border-[#D5C5B9] rounded-sm"
                         ></textarea>
                         @error('editingComment')
                             <span class="text-xs text-red-600 mt-1">{{ $message }}</span>

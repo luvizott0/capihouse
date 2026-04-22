@@ -1,5 +1,4 @@
 # O que eu falta
-- Ediçao de comentários
 - Edição e deleçao de postagens
 - Adiçao de sentimentos nos posts
 - Adiçao de imagens e vídeos

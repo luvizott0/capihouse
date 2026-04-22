@@ -9,10 +9,10 @@ use Livewire\Component;
 
 #[Title('Acervo')]
 #[Layout('components.layouts.feed')]
-class Acervo extends Component
+class Catalog extends Component
 {
     public function render(): View
     {
-        return view('livewire.acervo');
+        return view('livewire.catalog');
     }
 }

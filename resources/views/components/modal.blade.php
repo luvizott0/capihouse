@@ -64,15 +64,17 @@
             <div class="p-4">
                 {{ $slot }}
             </div>
-            <div class="w-full flex px-4 py-2 place-content-end">
-                <button
-                    type="button"
-                    class="btn-primary"
-                    @if($action) wire:click="{{ $action }}" @endif
-                >
-                    [ {{ $actionLabel }} ]
-                </button>
-            </div>
+            @if ($action)
+                <div class="w-full flex px-4 py-2 place-content-end">
+                    <button
+                        type="button"
+                        class="btn-primary"
+                        @if($action) wire:click="{{ $action }}" @endif
+                    >
+                        [ {{ $actionLabel }} ]
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </div>

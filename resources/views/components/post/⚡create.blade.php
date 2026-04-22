@@ -9,6 +9,8 @@ new class extends Component {
 
     public ?string $hashtag = null;
 
+    public ?string $feeling = null;
+
     /** @var array<int, string> */
     public array $hashtags = [];
 
@@ -84,17 +86,14 @@ new class extends Component {
         open-event="post::create"
         close-event="post::close-modal"
         title="Criar Post"
-        action-label="Publicar"
-        action="createPost"
     >
         <div>
             <x-user-info />
-            <textarea
-                placeholder="O que você está pensando?"
+            <x-forms.comment-field
                 wire:model="content"
-                class="w-full py-1 px-2 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400"
-            >
-            </textarea>
+                placeholder="O que você está pensando?"
+                max="500"
+            />
 
             <div>
                 <x-forms.input
@@ -121,6 +120,23 @@ new class extends Component {
                         @endforeach
                     </div>
                 @endif
+            </div>
+
+            <div class="flex justify-between items-center gap-2 mt-6">
+                <div>
+                    <x-forms.comment-field
+                        wire:model="feeling"
+                        placeholder="Me sentindo..."
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    wire:click="createPost"
+                >
+                    [ Publicar ]
+                </button>
             </div>
         </div>
     </x-modal>

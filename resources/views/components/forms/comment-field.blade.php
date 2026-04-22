@@ -35,6 +35,9 @@
     }"
     x-init="init()"
 >
+    @if($label)
+        <p class="text-sm my-1">{{ $label }}</p>
+    @endif
     <textarea
         x-ref="textarea"
         wire:ignore.self
