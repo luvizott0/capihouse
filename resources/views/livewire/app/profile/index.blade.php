@@ -9,4 +9,3 @@
 
     {{ $posts->links() }}
 </div>
-

@@ -114,7 +114,7 @@ new class extends Component {
 };
 ?>
 
-<div>
+<div class="px-4 pb-2">
     <div class="mt-4">
         @foreach($comments as $comment)
             <div class="flex items-start gap-1 mb-2">
@@ -174,7 +174,7 @@ new class extends Component {
             <x-forms.comment-field wire:model="comment" placeholder="{{ __('Deixe um comentário...') }}" max="150"/>
         </div>
 
-        <button wire:click="send" class="bg-primary px-4 py-0.5 rounded-sm cursor-pointer">
+        <button wire:click="send" class="bg-primary px-4 pt-0.5 pb-1 cursor-pointer">
             <span class="text-sm text-white">Enviar</span>
         </button>
     </div>

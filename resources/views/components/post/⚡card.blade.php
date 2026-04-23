@@ -133,7 +133,7 @@ new class extends Component {
 
         {{-- Body Text --}}
         @if ($post->content)
-            <p class="mb-2 text-sm py-2 text-primary-800 leading-relaxed">{{ $post->content }}</p>
+            <p class="mb-2 text-sm py-2 break-all text-primary-800 leading-relaxed">{{ $post->content }}</p>
         @endif
 
         <div class="flex justify-between items-start gap-2">
@@ -208,11 +208,13 @@ new class extends Component {
                 @endif
             @endif
         </div>
+    </div>
 
-        <div>
-            @if($commentsOpen)
+    <div>
+        @if($commentsOpen)
+            <div class="border-t border-primary">
                 <livewire:post.comments :post="$post"/>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 </div>

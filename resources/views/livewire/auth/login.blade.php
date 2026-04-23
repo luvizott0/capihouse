@@ -1,7 +1,7 @@
 <section>
     <div class="flex flex-col gap-6">
         {{-- Welcome Card --}}
-        <div class="overflow-hidden border-2 rounded-lg border-primary">
+        <div class="overflow-hidden border-2 border-primary">
             <div class="px-4 py-2 text-sm font-bold tracking-wider text-center text-white uppercase bg-primary">
                 ★ {{ __('Bem-vindo ao CapiHouse') }} ★
             </div>
@@ -13,7 +13,7 @@
         </div>
 
         {{-- Login Form Card --}}
-        <div class="overflow-hidden border-2 rounded-lg border-primary">
+        <div class="overflow-hidden border-2 border-primary">
             <div class="px-4 py-2 text-sm font-bold tracking-wider text-white uppercase bg-primary">
                 » {{ __('Acessar conta') }}
             </div>
@@ -28,6 +28,14 @@
                 <form wire:submit="tryLogin" class="flex flex-col gap-4">
                     @csrf
 
+                    @error('credentials')
+                        <p class="text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    @error('rateLimiter')
+                        <p class="text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+
                     {{-- Email or Username --}}
                     <div>
                         <label for="email" class="block mb-1 text-sm font-bold text-primary-800">
@@ -37,11 +45,11 @@
                             id="email"
                             name="email"
                             type="text"
-                            value="{{ old('email') }}"
+                            wire:model="email"
                             required
                             autofocus
                             autocomplete="username"
-                            class="w-full px-3 py-2 text-sm border-2 rounded border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
+                            class="w-full px-3 py-2 text-sm border-2 border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
                         />
                         @error('email')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -57,19 +65,31 @@
                             id="password"
                             name="password"
                             type="password"
+                            wire:model="password"
                             required
                             autocomplete="current-password"
-                            class="w-full px-3 py-2 text-sm border-2 rounded border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
+                            class="w-full px-3 py-2 text-sm border-2 border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
                         />
                         @error('password')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
+                    <div class="flex place-content-end">
+                        <label class="flex items-center">
+                            <input
+                                type="checkbox"
+                                wire:model="remember"
+                                class="w-4 h-4 focus:ring-primary border-border"
+                            />
+                            <span class="ml-2 text-sm text-primary-800">{{ __('Manter logado') }}</span>
+                        </label>
+                    </div>
+
                     {{-- Submit --}}
                     <button
                         type="submit"
-                        class="w-full py-3 text-sm font-bold text-white transition rounded cursor-pointer bg-primary hover:bg-primary-500"
+                        class="w-full py-3 text-sm font-bold text-white transition cursor-pointer bg-primary hover:bg-primary-500"
                         data-test="login-button"
                     >
                         [ {{ __('Entrar') }} ]

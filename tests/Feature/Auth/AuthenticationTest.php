@@ -1,10 +1,19 @@
 <?php
 
+use App\Enums\UserStatuses;
+use App\Livewire\Auth\Login;
 use App\Models\User;
 use Laravel\Fortify\Features;
+use Livewire\Livewire;
 
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
+
+    $response->assertOk();
+});
+
+test('home route can be rendered', function () {
+    $response = $this->get(route('home'));
 
     $response->assertOk();
 });
@@ -37,6 +46,38 @@ test('users can authenticate using username', function () {
         ->assertRedirect(route('feed', absolute: false));
 
     $this->assertAuthenticated();
+});
+
+test('users can authenticate in livewire login using username', function () {
+    $user = User::factory()->create([
+        'status' => UserStatuses::APPROVED,
+    ]);
+
+    Livewire::test(Login::class)
+        ->set('email', $user->username)
+        ->set('password', 'password')
+        ->set('remember', false)
+        ->call('tryLogin')
+        ->assertHasNoErrors()
+        ->assertRedirect(route('feed'));
+
+    $this->assertAuthenticatedAs($user);
+});
+
+test('remember token is refreshed when remember me is enabled in livewire login', function () {
+    $user = User::factory()->create([
+        'status' => UserStatuses::APPROVED,
+        'remember_token' => null,
+    ]);
+
+    Livewire::test(Login::class)
+        ->set('email', $user->email)
+        ->set('password', 'password')
+        ->set('remember', true)
+        ->call('tryLogin')
+        ->assertHasNoErrors();
+
+    expect($user->refresh()->remember_token)->not->toBeNull();
 });
 
 test('users can not authenticate with invalid password', function () {

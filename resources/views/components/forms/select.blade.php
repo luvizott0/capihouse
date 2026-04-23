@@ -36,7 +36,7 @@
                  'placeholder' => $placeholder,
                  'required' => $required,
              ])->class([
-                 'w-full appearance-none resize-none overflow-hidden py-1.5 pl-2.5 pr-6 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400',
+                 'w-full cursor-pointer appearance-none resize-none overflow-hidden py-1.5 pl-2.5 pr-6 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400',
                  'text-xs' => $xs,
                  'text-sm' => $sm,
                  'text-base' => $md,

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\App\Events;
 
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Eventos')]
+#[Title('Events')]
 #[Layout('components.layouts.auth')]
-class Events extends Component
+class Index extends Component
 {
     public function render(): View
     {
-        return view('livewire.events');
+        return view('livewire.app.events.index');
     }
 }

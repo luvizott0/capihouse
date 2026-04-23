@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\App\Feed;
 
 use App\Models\Post;
 use Illuminate\View\View;
@@ -10,8 +10,8 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Feed')]
-#[Layout('components.layouts.feed')]
-class Feed extends Component
+#[Layout('components.layouts.auth')]
+class Index extends Component
 {
     #[On('posts::reload')]
     public function reloadPosts(): void
@@ -25,7 +25,7 @@ class Feed extends Component
             ->latest()
             ->paginate(10);
 
-        return view('livewire.feed', [
+        return view('livewire.app.feed.index', [
             'posts' => $posts,
         ]);
     }

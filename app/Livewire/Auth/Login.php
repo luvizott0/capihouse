@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Auth;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use RateLimiter;
 
 #[Title('Login')]
 class Login extends Component
@@ -20,11 +21,19 @@ class Login extends Component
 
     public function tryLogin(): void
     {
+        $this->validate([
+            'email' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
         if ($this->ensureIsNotRateLimited()) {
             return;
         }
 
-        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (! Auth::attempt([
+            $this->loginField() => $this->loginIdentifier(),
+            'password' => $this->password,
+        ], $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
             $this->addError('credentials', __('Credenciais inválidas. Tente novamente.'));
@@ -38,8 +47,13 @@ class Login extends Component
             Auth::logout();
 
             $this->addError('email', __('Por favor, verifique seu email.'));
+
+            return;
         }
 
+        if (request()->hasSession()) {
+            request()->session()->regenerate();
+        }
         RateLimiter::clear($this->throttleKey());
 
         $this->redirect(route('feed'), navigate: true);
@@ -47,7 +61,7 @@ class Login extends Component
 
     public function ensureIsNotRateLimited(): bool
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return false;
         }
 
@@ -60,10 +74,20 @@ class Login extends Component
 
     public function throttleKey(): string
     {
-        return \Str::transliterate(strtolower($this->email)) . '|' . request()->ip();
+        return Str::transliterate(Str::lower($this->loginIdentifier())).'|'.request()->ip();
     }
 
-    #[Layout('components.layouts.auth')]
+    private function loginField(): string
+    {
+        return filter_var($this->loginIdentifier(), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    }
+
+    private function loginIdentifier(): string
+    {
+        return trim((string) $this->email);
+    }
+
+    #[Layout('components.layouts.guest')]
     public function render(): View
     {
         return view('livewire.auth.login');

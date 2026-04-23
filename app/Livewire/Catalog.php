@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Acervo')]
-#[Layout('components.layouts.feed')]
+#[Layout('components.layouts.auth')]
 class Catalog extends Component
 {
     public function render(): View

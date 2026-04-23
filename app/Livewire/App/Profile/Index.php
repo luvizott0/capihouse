@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\App\Profile;
 
 use App\Models\Post;
 use Illuminate\View\View;
@@ -8,9 +8,9 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('Perfil')]
-#[Layout('components.layouts.feed')]
-class Profile extends Component
+#[Title('Profile')]
+#[Layout('components.layouts.auth')]
+class Index extends Component
 {
     public function render(): View
     {
@@ -20,7 +20,7 @@ class Profile extends Component
             ->latest()
             ->paginate(10);
 
-        return view('livewire.profile', [
+        return view('livewire.app.profile.index', [
             'posts' => $posts,
         ]);
     }
