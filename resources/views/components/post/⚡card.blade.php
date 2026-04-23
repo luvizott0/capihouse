@@ -84,19 +84,56 @@ new class extends Component {
 
 <div class="overflow-hidden border-2 rounded-xs border-border bg-white">
     {{-- Bulletin Header --}}
-    <div
-        class="flex font-mono items-center justify-between px-4 py-2 text-sm font-bold tracking-wider text-white uppercase bg-primary">
-        <span>Postado por {{ $user->name }}</span>
-        <span class="text-primary-200">{{ $this->getTime() }}</span>
+    <div class="flex font-mono items-center justify-between px-4 py-2 text-sm font-bold tracking-wider bg-primary text-white border-b border-border uppercase">
+        <span>{{ $user->name }} - {{ $this->getTime() }}</span>
+
+        {{-- Actions: Like, Comment, Share --}}
+        <div class="flex items-center gap-6">
+            <button wire:click="likePost"
+                    class="flex items-center cursor-pointer gap-1 text-sm text-white hover:text-red-500 transition">
+                @if($isLiked)
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                         class="w-5 text-red-600">
+                        <path
+                            d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+                    </svg>
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-5 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                    </svg>
+                @endif
+
+
+                <span>{{ $post->getLikesCount() }}</span>
+            </button>
+            <button wire:click="$toggle('commentsOpen')"
+                    class="flex items-center gap-1 text-sm text-white hover:text-primary-800 cursor-pointer transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <span>{{ $commentsCount }}</span>
+            </button>
+            <button class="flex items-center gap-1 text-sm text-white hover:text-primary-800 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0-12.814a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0 12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
-    <div class="p-4">
+    <div class="px-4 pt-4 pb-2">
         {{-- User Info --}}
         <x-user-info :user="$user" />
 
         {{-- Body Text --}}
         @if ($post->content)
-            <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->content }}</p>
+            <p class="mb-2 text-sm py-2 text-primary-800 leading-relaxed">{{ $post->content }}</p>
         @endif
 
         <div class="flex justify-between items-start gap-2">
@@ -104,7 +141,7 @@ new class extends Component {
                 <div class="flex flex-wrap gap-2 mb-3">
                     @foreach ($post->hashtags as $hashtag)
                         <span
-                            class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white  bg-primary-600">
+                            class="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium text-white  bg-primary-600">
                         #{{ $hashtag->name }}
                     </span>
                     @endforeach
@@ -112,13 +149,13 @@ new class extends Component {
             @endif
 
             <div class="flex items-center gap-2">
-                <span class="font-bold font-mono text-sm">Se sentindo:</span>
-                <div class="border border-border bg-primary-100 pl-2 pr-1 rounded-xs pb-0.5">{{ $post->getMood() }}</div>
+                <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
+                <div class="border border-border font-mono bg-primary-100 pl-2 pr-1 rounded-xs pb-0.5">{{ $post->getMood() }}</div>
             </div>
         </div>
 
         {{-- Media --}}
-        <div class="border-t border-primary-600">
+        <div>
             @if ($hasMedia)
                 @if ($isCarousel)
                     {{-- Image Carousel with Alpine.js --}}
@@ -170,45 +207,6 @@ new class extends Component {
                     </div>
                 @endif
             @endif
-        </div>
-
-        {{-- Actions: Like, Comment, Share --}}
-        <div class="flex items-center gap-6 pt-5">
-            <button wire:click="likePost"
-                    class="flex items-center cursor-pointer gap-1 text-sm text-primary-600 hover:text-red-500 transition">
-                @if($isLiked)
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                         class="w-5 text-red-600">
-                        <path
-                            d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
-                    </svg>
-                @else
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="w-5 text-subtitle">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
-                    </svg>
-                @endif
-
-
-                <span>{{ $post->getLikesCount() }}</span>
-            </button>
-            <button wire:click="$toggle('commentsOpen')"
-                    class="flex items-center gap-1 text-sm text-subtitle hover:text-primary-800 cursor-pointer transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                </svg>
-                <span>{{ $commentsCount }}</span>
-            </button>
-            <button class="flex items-center gap-1 text-sm text-subtitle hover:text-primary-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0-12.814a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0 12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
-                </svg>
-            </button>
         </div>
 
         <div>

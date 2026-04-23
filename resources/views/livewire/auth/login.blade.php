@@ -1,4 +1,4 @@
-<x-layouts.auth :title="__('Entrar')">
+<section>
     <div class="flex flex-col gap-6">
         {{-- Welcome Card --}}
         <div class="overflow-hidden border-2 rounded-lg border-primary">
@@ -25,7 +25,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-4">
+                <form wire:submit="tryLogin" class="flex flex-col gap-4">
                     @csrf
 
                     {{-- Email or Username --}}
@@ -44,7 +44,7 @@
                             class="w-full px-3 py-2 text-sm border-2 rounded border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
                         />
                         @error('email')
-                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -62,7 +62,7 @@
                             class="w-full px-3 py-2 text-sm border-2 rounded border-primary-200 bg-primary-50 focus:outline-none focus:border-primary-400"
                         />
                         @error('password')
-                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -88,4 +88,4 @@
             </div>
         @endif
     </div>
-</x-layouts.auth>
+</section>

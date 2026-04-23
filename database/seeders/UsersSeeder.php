@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserStatuses;
 use App\Models\User;
-use App\UserStatuses;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -18,14 +17,14 @@ class UsersSeeder extends Seeder
             'name' => 'Calebe Luvizotto',
             'username' => 'luvizotto',
             'password' => 'password',
-            'status' => \App\Enums\UserStatuses::APPROVED,
+            'status' => UserStatuses::APPROVED,
         ]);
 
         User::factory()->create([
-            'name' => 'Rogeria Capivara',
+            'name' => 'Capivara Rogéria',
             'username' => 'capivara.rogeria',
             'password' => 'password',
-            'status' => \App\Enums\UserStatuses::APPROVED,
+            'status' => UserStatuses::APPROVED,
         ]);
     }
 }

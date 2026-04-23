@@ -16,6 +16,7 @@
     </style>
 </head>
 <body class="font-sans bg-primary-50">
+    <x-dev.bar />
     @php
         $navigationItems = [
             ['route' => 'feed', 'label' => 'Feed'],
@@ -54,7 +55,7 @@
                         <img src="{{ asset('capihouse-logo.png') }}" alt="CapiHouse" class="w-8 h-8">
                         <span class="text-lg font-bold font-mono text-primary-800">CapiHouse</span>
                     </div>
-                    <div class="overflow-hidden hidden md:block max-w-[65%]">
+                    <div class="overflow-hidden max-w-[65%]">
                         <span class="inline-block text-sm font-bold whitespace-nowrap text-primary animate-marquee">
                             ★ {{ __('Ola, :name!', ['name' => auth()->user()->name]) }} ★ {{ __('Explore o CapiHouse') }} ★
                         </span>
@@ -84,6 +85,8 @@
                             readonly
                         />
                     </div>
+
+                    <livewire:auth.logout />
                 </div>
 
                 {{-- Desktop Navigation --}}

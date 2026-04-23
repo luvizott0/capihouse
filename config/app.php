@@ -42,6 +42,12 @@ return [
     'debug' => (bool) env('APP_DEBUG', false),
 
     /*
+     * Enable the Laravel DevBar.
+     */
+
+    'dev_bar' => (bool) env('APP_DEV_BAR', false),
+
+    /*
     |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------

@@ -21,7 +21,7 @@ new class extends Component {
     public function rules(): array
     {
         return [
-            'content' => ['nullable', 'string', 'max:2000'],
+            'content' => ['nullable', 'string', 'max:150'],
             'hashtag' => ['nullable', 'string', 'max:20'],
             'feeling' => ['required', 'string', 'max:10'],
         ];
@@ -110,7 +110,7 @@ new class extends Component {
             <x-forms.comment-field
                 wire:model="content"
                 placeholder="O que você está pensando?"
-                max="500"
+                max="150"
             />
 
             <div>
