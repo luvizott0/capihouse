@@ -85,7 +85,7 @@ new class extends Component {
 <div class="overflow-hidden border-2 rounded-xs border-border bg-white">
     {{-- Bulletin Header --}}
     <div
-        class="flex items-center justify-between px-4 py-2 text-sm font-bold tracking-wider text-white uppercase bg-primary">
+        class="flex font-mono items-center justify-between px-4 py-2 text-sm font-bold tracking-wider text-white uppercase bg-primary">
         <span>Postado por {{ $user->name }}</span>
         <span class="text-primary-200">{{ $this->getTime() }}</span>
     </div>
@@ -93,21 +93,29 @@ new class extends Component {
     <div class="p-4">
         {{-- User Info --}}
         <x-user-info :user="$user" />
+
         {{-- Body Text --}}
         @if ($post->content)
             <p class="mb-2 text-sm text-primary-800 leading-relaxed">{{ $post->content }}</p>
         @endif
 
-        @if ($post->hashtags->count() > 0)
-            <div class="flex flex-wrap gap-2 mb-3">
-                @foreach ($post->hashtags as $hashtag)
-                    <span
-                        class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white  bg-primary-600">
+        <div class="flex justify-between items-start gap-2">
+            @if ($post->hashtags->count() > 0)
+                <div class="flex flex-wrap gap-2 mb-3">
+                    @foreach ($post->hashtags as $hashtag)
+                        <span
+                            class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white  bg-primary-600">
                         #{{ $hashtag->name }}
                     </span>
-                @endforeach
+                    @endforeach
+                </div>
+            @endif
+
+            <div class="flex items-center gap-2">
+                <span class="font-bold font-mono text-sm">Se sentindo:</span>
+                <div class="border border-border bg-primary-100 pl-2 pr-1 rounded-xs pb-0.5">{{ $post->getMood() }}</div>
             </div>
-        @endif
+        </div>
 
         {{-- Media --}}
         <div class="border-t border-primary-600">

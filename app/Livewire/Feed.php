@@ -21,7 +21,7 @@ class Feed extends Component
 
     public function render(): View
     {
-        $posts = Post::with('user', 'likes', 'comments', 'hashtags')
+        $posts = Post::with('user', 'likes', 'comments', 'hashtags', 'feeling')
             ->latest()
             ->paginate(10);
 

@@ -11,8 +11,8 @@
     </div>
     <div>
         @if($showName)
-            <p class="text-sm font-bold text-primary-800">{{ $user->name }}</p>
-            <p class="text-xs text-subtitle">{{ '@' . $user->username }}</p>
+            <p class="text-sm font-mono font-bold text-primary-800">{{ $user->name }}</p>
+            <p class="text-xs font-mono text-subtitle">{{ '@' . $user->username }}</p>
         @endif
     </div>
 </div>

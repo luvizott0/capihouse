@@ -4,6 +4,7 @@ import { Picker } from 'emoji-mart';
 window.emojiPicker = (config = {}) => ({
 	open: false,
 	pickerMounted: false,
+	label: config.initialLabel ?? '🙂',
 
 	toggle() {
 		this.open = !this.open;
@@ -37,6 +38,8 @@ window.emojiPicker = (config = {}) => ({
 				if (!emoji || !config.target) {
 					return;
 				}
+
+				this.label = emoji;
 
 				const component = this.resolveLivewireComponent();
 

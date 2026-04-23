@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -39,8 +39,8 @@ class Feeling extends Model
     /**
      * Get posts associated with this feeling.
      */
-    public function posts(): HasMany
+    public function posts(): BelongsTo
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsTo(Post::class);
     }
 }

@@ -1,6 +1,6 @@
 @props([
     'target',
-    'buttonLabel' => 'Emoji',
+    'buttonLabel' => '🙂',
     'closeOnSelect' => true,
     'position' => 'left',
 ])
@@ -8,7 +8,7 @@
 @php($pickerPositionClass = $position === 'right' ? 'right-0' : 'left-0')
 
 <div
-    x-data="emojiPicker({ target: @js($target), closeOnSelect: @js($closeOnSelect) })"
+    x-data="emojiPicker({ target: @js($target), closeOnSelect: @js($closeOnSelect), initialLabel: @js($buttonLabel) })"
     @click.outside="close()"
     class="relative inline-block"
     data-emoji-picker="true"
@@ -17,9 +17,9 @@
     <button
         type="button"
         @click="toggle()"
-        class="inline-flex items-center gap-1 px-2 py-1.5 cursor-pointer text-xs font-bold text-primary-700 border border-border bg-primary-100 hover:border-primary-400"
+        class="inline-flex items-center gap-1 px-1 cursor-pointer text-lg font-bold text-primary-700 border border-border bg-primary-100 hover:border-primary-400"
     >
-        🙂
+        <span x-text="label">{{ $buttonLabel }}</span>
     </button>
 
     <div

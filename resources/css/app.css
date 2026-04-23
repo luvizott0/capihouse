@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:disabled {
-    background-color: var(--color-primary-400);
-    border-color: var(--color-primary-400);
+    background-color: var(--color-primary-300);
+    border-color: var(--color-primary-300);
     cursor: not-allowed;
 }

@@ -2,6 +2,8 @@
 
 use App\Models\Hashtag;
 use App\Models\Post;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -30,9 +32,11 @@ new class extends Component {
         return [
             'content.max' => 'O conteúdo do post deve conter no máximo 2000 caracteres.',
             'hashtag.max' => 'A hashtag deve conter no máximo 25 caracteres.',
+            'feeling.required' => 'O campo de sentimento é obrigatório.',
         ];
     }
 
+    #[Computed]
     public function hasContent(): bool
     {
         return $this->content !== null;
@@ -73,7 +77,6 @@ new class extends Component {
 
         $post->feeling()->create([
             'name' => $this->feeling,
-            'color' => '#A66130',
             'emoji' => $this->emoji ?? '🙂',
         ]);
 
@@ -87,6 +90,11 @@ new class extends Component {
         $this->dispatch('post::close-modal');
     }
 
+    #[On('post::create')]
+    public function resetForm(): void
+    {
+        $this->reset('content', 'hashtags', 'hashtag', 'emoji', 'feeling');
+    }
 };
 ?>
 
@@ -98,7 +106,7 @@ new class extends Component {
         max-width="lg"
     >
         <div>
-            <x-user-info />
+            <x-user-info/>
             <x-forms.comment-field
                 wire:model="content"
                 placeholder="O que você está pensando?"
@@ -135,13 +143,7 @@ new class extends Component {
             <div class="flex justify-between items-center gap-2 mt-6">
                 <div class="flex gap-2  items-center">
                     <div>
-                        <x-forms.emoji-picker target="emoji" button-label="Emoji" />
-
-                        @if ($emoji)
-                            <p class="mt-1 text-xs text-primary-700">
-                                Emoji selecionado: {{ $emoji }}
-                            </p>
-                        @endif
+                        <x-forms.emoji-picker target="emoji"/>
                     </div>
 
                     <x-forms.comment-field

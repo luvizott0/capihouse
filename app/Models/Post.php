@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -96,9 +97,9 @@ class Post extends Model
     /**
      * Get feeling associated with the post.
      */
-    public function feeling(): BelongsTo
+    public function feeling(): HasOne
     {
-        return $this->belongsTo(Feeling::class);
+        return $this->hasOne(Feeling::class);
     }
 
     /**
@@ -115,5 +116,12 @@ class Post extends Model
     public function getCommentsCount(): int
     {
         return $this->comments()->count();
+    }
+
+    public function getMood(): string
+    {
+        $this->loadMissing('feeling');
+
+        return $this->feeling->name . ' ' . $this->feeling->emoji;
     }
 }
