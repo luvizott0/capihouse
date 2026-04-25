@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('banner_url')->nullable();
+            $table->string('avatar_url')->nullable();
+            $table->string('bio')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('spotify_url')->nullable();
+            $table->date('birth')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -26,5 +26,7 @@ class UsersSeeder extends Seeder
             'password' => 'password',
             'status' => UserStatuses::APPROVED,
         ]);
+
+        User::factory(10)->create();
     }
 }

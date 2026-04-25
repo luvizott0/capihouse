@@ -4,8 +4,13 @@
             » {{ __('Sobre mim') }}
         </div>
 
-        <div class="px-4 py-2">
-            teste
+        <div class="px-4 py-2 flex flex-col gap-2">
+            <div class="flex gap-2 items-center">
+                <x-icons.outline.cake class="w-4" />
+                <span class="text-sm text-primary-500">{{ $user->birth }}</span>
+            </div>
+            <div class="flex"></div>
+            <div class="flex"></div>
         </div>
     </div>
 
