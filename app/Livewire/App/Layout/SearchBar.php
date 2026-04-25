@@ -13,6 +13,11 @@ class SearchBar extends Component
     public function mount(): void
     {
         $currentRouteName = request()->route()?->getName() ?? 'feed';
+
+        if ($currentRouteName === 'profile.show') {
+            $currentRouteName = 'profile';
+        }
+
         $this->scope = array_key_exists($currentRouteName, $this->scopes)
             ? $currentRouteName
             : 'feed';
@@ -48,7 +53,7 @@ class SearchBar extends Component
             'feed' => ['type' => 'event', 'label' => __('Criar post'), 'event' => 'post::create'],
             'events' => ['type' => 'event', 'label' => __('Adicionar evento'), 'event' => 'event::create'],
             'catalog' => ['type' => 'event', 'label' => __('Adicionar midia'), 'event' => 'catalog::create'],
-            'profile' => ['type' => 'logout', 'label' => __('Logout')],
+            'profile', 'profile.show' => ['type' => 'logout', 'label' => __('Logout')],
             default => ['type' => 'event', 'label' => __('Acao')],
         };
     }

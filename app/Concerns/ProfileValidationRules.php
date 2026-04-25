@@ -18,6 +18,7 @@ trait ProfileValidationRules
         return [
             'name' => $this->nameRules(),
             'email' => $this->emailRules($userId),
+            'banner_url' => $this->bannerUrlRules(),
         ];
     }
 
@@ -47,5 +48,15 @@ trait ProfileValidationRules
                 ? Rule::unique(User::class)
                 : Rule::unique(User::class)->ignore($userId),
         ];
+    }
+
+    /**
+     * Get the validation rules used to validate profile banner URL.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function bannerUrlRules(): array
+    {
+        return ['nullable', 'string', 'url', 'max:2048'];
     }
 }

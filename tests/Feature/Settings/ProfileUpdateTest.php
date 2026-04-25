@@ -29,6 +29,22 @@ test('profile information can be updated', function () {
     expect($user->email_verified_at)->toBeNull();
 });
 
+test('profile banner url can be updated', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $response = Livewire::test(Profile::class)
+        ->set('name', $user->name)
+        ->set('email', $user->email)
+        ->set('banner_url', 'https://example.com/new-banner.jpg')
+        ->call('updateProfileInformation');
+
+    $response->assertHasNoErrors();
+
+    expect($user->refresh()->banner_url)->toEqual('https://example.com/new-banner.jpg');
+});
+
 test('email verification status is unchanged when email address is unchanged', function () {
     $user = User::factory()->create();
 

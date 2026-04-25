@@ -24,6 +24,14 @@
                 @endif
             </div>
 
+            <flux:input
+                wire:model="banner_url"
+                :label="__('URL do banner')"
+                type="url"
+                autocomplete="url"
+                :placeholder="__('https://exemplo.com/meu-banner.jpg')"
+            />
+
             <div class="flex items-center gap-4">
                 <flux:button variant="primary" type="submit">{{ __('Save') }}</flux:button>
             </div>

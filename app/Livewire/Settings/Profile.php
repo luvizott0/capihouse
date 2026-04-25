@@ -19,6 +19,8 @@ class Profile extends Component
 
     public string $email = '';
 
+    public string $banner_url = '';
+
     /**
      * Mount the component.
      */
@@ -26,6 +28,7 @@ class Profile extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->banner_url = Auth::user()->banner_url ?? '';
     }
 
     /**
@@ -36,6 +39,10 @@ class Profile extends Component
         $user = Auth::user();
 
         $validated = $this->validate($this->profileRules($user->id));
+
+        if (blank(data_get($validated, 'banner_url'))) {
+            $validated['banner_url'] = null;
+        }
 
         $user->fill($validated);
 

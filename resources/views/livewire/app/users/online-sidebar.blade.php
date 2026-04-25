@@ -15,7 +15,7 @@
         'overflow-y-auto h-[calc(100%-53px)]' => $mobile,
     ])>
         @forelse ($siteUsers as $siteUser)
-            <div class="flex items-center justify-between gap-3 px-2 py-2 rounded-sm bg-primary-50">
+            <a wire:navigate href="{{ route('profile.show', $siteUser->username) }}" class="flex items-center justify-between gap-3 px-2 py-2 rounded-sm bg-primary-50 hover:bg-primary-100">
                 <div class="min-w-0">
                     <p class="text-sm font-semibold truncate text-primary-800">{{ $siteUser->name }}</p>
                     <p class="text-xs truncate text-subtitle">{{ '@' . $siteUser->username }}</p>
@@ -24,7 +24,7 @@
                     <span class="w-1.5 h-1.5 rounded-full {{ in_array($siteUser->id, $onlineUserIds) ? 'bg-emerald-500' : 'bg-zinc-500' }}"></span>
                     {{ in_array($siteUser->id, $onlineUserIds) ? __('Online') : __('Offline') }}
                 </span>
-            </div>
+            </a>
         @empty
             <p class="px-2 py-6 text-sm text-center text-primary-500">{{ __('Nenhum usuario encontrado.') }}</p>
         @endforelse

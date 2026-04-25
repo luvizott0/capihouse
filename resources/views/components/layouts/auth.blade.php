@@ -44,10 +44,6 @@
         </header>
 
         <div class="mx-auto flex w-full max-w-7xl gap-4 px-2 md:px-4">
-            <aside class="hidden md:flex md:w-72 md:shrink-0 md:flex-col md:pt-4">
-                <livewire:app.profile.sidebar />
-            </aside>
-
             <main class="flex-1 min-w-0 overflow-hidden pb-6">
                 {{ $slot }}
             </main>
