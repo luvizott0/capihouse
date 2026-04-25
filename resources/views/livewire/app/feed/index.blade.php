@@ -11,15 +11,6 @@
     {{-- Pagination --}}
     {{ $posts->links() }}
 
-    {{-- FAB --}}
-    <button
-        x-data
-        @click="$dispatch('post::create')"
-        class="fixed z-50 flex items-center cursor-pointer justify-center text-2xl text-white  rounded-full shadow-lg w-14 h-14
-        bottom-24 right-4 bg-primary hover:bg-primary-500"
-    >
-        +
-    </button>
 
     <livewire:post.create />
 </div>

@@ -8,16 +8,20 @@ test('guests are redirected to login from app pages', function (string $routeNam
         ->assertRedirect(route('login'));
 })->with([
     'feed',
-    'perfil',
-    'eventos',
-    'acervo',
+    'profile',
+    'events',
+    'catalog',
 ]);
 
-test('authenticated users can open app pages and see shared navigation shell', function (string $routeName, string $placeholderText) {
+test('authenticated users can open app pages and see shared navigation shell', function (string $routeName, string $placeholderText, string $actionLabel) {
     $user = User::factory()->create();
     $otherUser = User::factory()->create(['name' => 'Outro Usuario']);
 
-    Post::factory()->for($user)->create();
+    $post = Post::factory()->for($user)->create();
+    $post->feeling()->create([
+        'name' => 'Feliz',
+        'emoji' => '🙂',
+    ]);
 
     $this->actingAs($user)
         ->get(route($routeName))
@@ -28,25 +32,30 @@ test('authenticated users can open app pages and see shared navigation shell', f
         ->assertSee('Acervo')
         ->assertSee('Selecionar tipo de pesquisa')
         ->assertSee($placeholderText)
+        ->assertSee($actionLabel)
         ->assertSee('Usuarios do site')
         ->assertSee('Usuarios')
         ->assertSee($otherUser->name);
 })->with([
-    ['feed', 'Pesquisar posts...'],
-    ['perfil', 'Pesquisar posts deste perfil...'],
-    ['eventos', 'Pesquisar eventos...'],
-    ['acervo', 'Pesquisar midias do acervo...'],
+    ['feed', 'Pesquisar posts...', 'Criar post'],
+    ['profile', 'Pesquisar posts deste perfil...', 'Logout'],
+    ['events', 'Pesquisar eventos...', 'Adicionar evento'],
+    ['catalog', 'Pesquisar midias do acervo...', 'Adicionar midia'],
 ]);
 
 test('perfil page lists authenticated user posts', function () {
     $user = User::factory()->create();
 
-    Post::factory()->for($user)->create([
+    $post = Post::factory()->for($user)->create([
         'content' => 'Postagem do meu perfil',
+    ]);
+    $post->feeling()->create([
+        'name' => 'Animado',
+        'emoji' => '😄',
     ]);
 
     $this->actingAs($user)
-        ->get(route('perfil'))
+        ->get(route('profile'))
         ->assertOk()
         ->assertSee('Postagem do meu perfil');
 });

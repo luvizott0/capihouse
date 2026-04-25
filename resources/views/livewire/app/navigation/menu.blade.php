@@ -2,6 +2,7 @@
     @if($desktop)
         @foreach ($this->menuItems() as $item)
             <a
+                wire:navigate
                 href="{{ route($item['route']) }}"
                 class="px-4 py-2 text-sm font-bold uppercase border rounded-sm transition {{ request()->routeIs($item['route']) ? 'text-white bg-primary border-primary' : 'text-primary-700 bg-primary-100 border-border hover:border-primary-300' }}"
             >
