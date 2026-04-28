@@ -1,7 +1,7 @@
 <div class="overflow-hidden border-2 rounded-xs border-border bg-white">
     {{-- Bulletin Header --}}
     <div class="flex font-mono items-center justify-between px-4 py-2 text-sm font-bold tracking-wider bg-primary text-white border-b border-border uppercase">
-        <span>{{ $user->name }} - {{ $this->getTime() }}</span>
+        <span>» {{ __('Publicado') }} {{ $this->getTime() }}</span>
 
         {{-- Actions: Like, Comment, Share --}}
         <div class="flex items-center gap-6">
@@ -44,15 +44,22 @@
     </div>
 
     <div class="px-4 pt-4 pb-2">
-        {{-- User Info --}}
-        <x-user-info :user="$user" />
+        <div class="flex items-center justify-between mb-2">
+            {{-- User Info --}}
+            <x-user-info :user="$user" />
+
+            <div class="flex items-center gap-2">
+                <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
+                <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
+            </div>
+        </div>
 
         {{-- Body Text --}}
         @if ($post->content)
-            <p class="mb-2 text-sm py-2 break-all text-primary-800 leading-relaxed">{{ $post->content }}</p>
+            <p class="mb-2 text-md py-2 break-all text-primary-800 leading-relaxed">{{ $post->content }}</p>
         @endif
 
-        <div class="flex justify-between items-start gap-2">
+        <div class="flex justify-between items-start gap-2 mb-3">
             @if ($post->hashtags->count() > 0)
                 <div class="flex flex-wrap gap-2 mb-3">
                     @foreach ($post->hashtags as $hashtag)
@@ -63,11 +70,6 @@
                     @endforeach
                 </div>
             @endif
-
-            <div class="flex items-center gap-2">
-                <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
-                <div class="border border-border font-mono bg-primary-100 pl-2 pr-1 rounded-xs pb-0.5">{{ $post->getMood() }}</div>
-            </div>
         </div>
 
         {{-- Media --}}
@@ -76,16 +78,16 @@
                 @if ($isCarousel)
                     {{-- Image Carousel with Alpine.js --}}
                     <div x-data="{ current: 0, total: {{ count($media) }} }" class="relative mb-3">
-                        <div class="overflow-hidden rounded-lg">
+                        <div class="overflow-hidden rounded-lg flex justify-center items-center">
                             @foreach ($media as $index => $item)
                                 <div x-show="current === {{ $index }}"
-                                     x-transition:enter="transition ease-out duration-300" class="w-full">
+                                     x-transition:enter="transition ease-out duration-300" class="w-full flex justify-center items-center">
                                     @if ($item['type'] === 'video')
                                         <video src="{{ $item['url'] }}" controls
-                                               class="object-cover w-full rounded-lg aspect-square"></video>
+                                               class="object-cover w-full rounded-lg aspect-square max-w-xl"></video>
                                     @else
                                         <img src="{{ $item['url'] }}" alt=""
-                                             class="object-cover w-full rounded-lg aspect-square" loading="lazy">
+                                             class="object-cover w-full rounded-lg aspect-square max-w-xl" loading="lazy">
                                     @endif
                                 </div>
                             @endforeach
@@ -106,19 +108,19 @@
                             <template x-for="i in total" :key="i">
                                 <button @click="current = i - 1"
                                         :class="current === i - 1 ? 'bg-primary' : 'bg-primary-200'"
-                                        class="w-2 h-2 rounded-full transition"></button>
+                                        class="w-2 h-2 cursor-pointer rounded-full transition"></button>
                             </template>
                         </div>
                     </div>
                 @else
                     {{-- Single Media --}}
-                    <div class="mb-3">
+                    <div class="mb-3 flex justify-center items-center">
                         @if ($media[0]['type'] === 'video')
                             <video src="{{ $media[0]['url'] }}" controls
-                                   class="object-cover w-full rounded-lg aspect-square"></video>
+                                   class="object-cover w-full rounded-lg aspect-square max-w-xl"></video>
                         @else
                             <img src="{{ $media[0]['url'] }}" alt=""
-                                 class="object-cover w-full rounded-lg aspect-square" loading="lazy">
+                                 class="object-cover w-full rounded-lg aspect-square max-w-xl" loading="lazy">
                         @endif
                     </div>
                 @endif

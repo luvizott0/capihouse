@@ -7,6 +7,7 @@
     >
         <div>
             <x-user-info/>
+
             <x-forms.comment-field
                 wire:model="content"
                 placeholder="O que você está pensando?"
