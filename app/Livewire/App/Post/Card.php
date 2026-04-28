@@ -4,6 +4,7 @@ namespace App\Livewire\App\Post;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -46,7 +47,12 @@ class Card extends Component
     public function loadPostInformation(): void
     {
         $this->user = $this->post->user;
-        $this->media = $this->post->media ?? [];
+        $this->media = collect($this->post->media ?? [])->map(function ($item) {
+            return [
+                'type' => $item['type'] ?? 'image',
+                'url' => isset($item['path']) ? Storage::url($item['path']) : ($item['url'] ?? ''),
+            ];
+        })->toArray();
         $this->hasMedia = count($this->media) > 0;
         $this->isCarousel = count($this->media) > 1;
     }
