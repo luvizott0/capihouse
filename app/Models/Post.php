@@ -22,12 +22,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read int|null $comments_count
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Collection<int, \App\Models\PostComment> $comments
- * @property-read \App\Models\Feeling|null $feeling
- * @property-read Collection<int, \App\Models\hashtag> $hashtags
+ * @property-read Collection<int, PostComment> $comments
+ * @property-read Feeling|null $feeling
+ * @property-read Collection<int, hashtag> $hashtags
  * @property-read int|null $hashtags_count
- * @property-read Collection<int, \App\Models\PostLike> $likes
- * @property-read \App\Models\User $user
+ * @property-read Collection<int, PostLike> $likes
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -40,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereMedia($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['user_id', 'content', 'media'])]
@@ -120,6 +122,6 @@ class Post extends Model
     {
         $this->loadMissing('feeling');
 
-        return $this->feeling->name . ' ' . $this->feeling->emoji;
+        return $this->feeling->name.' '.$this->feeling->emoji;
     }
 }

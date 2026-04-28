@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
+use Database\Factories\PostCommentFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,11 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $post_id
  * @property int $user_id
  * @property string $content
- * @property \Carbon\CarbonImmutable|null $deleted_at
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \App\Models\Post $post
- * @property-read \App\Models\User $user
+ * @property CarbonImmutable|null $deleted_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Post $post
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostCommentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment newQuery()
@@ -32,13 +35,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['post_id', 'user_id', 'content'])]
 class PostComment extends Model
 {
-    /** @use HasFactory<\Database\Factories\PostCommentFactory> */
+    /** @use HasFactory<PostCommentFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     /**

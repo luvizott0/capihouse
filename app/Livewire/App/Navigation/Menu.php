@@ -23,7 +23,7 @@ class Menu extends Component
 
     public function getRouteName(): string
     {
-        return  request()->route()?->getName() ?? 'feed';
+        return request()->route()?->getName() ?? 'feed';
     }
 
     public function render(): View

@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserStatuses;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -41,12 +40,13 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $two_factor_confirmed_at
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection<int, \App\Models\PostComment> $postComments
+ * @property-read Collection<int, PostComment> $postComments
  * @property-read int|null $post_comments_count
- * @property-read Collection<int, \App\Models\PostLike> $postLikes
+ * @property-read Collection<int, PostLike> $postLikes
  * @property-read int|null $post_likes_count
- * @property-read Collection<int, \App\Models\Post> $posts
+ * @property-read Collection<int, Post> $posts
  * @property-read int|null $posts_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -70,6 +70,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'username', 'email', 'banner_url', 'password', 'status', 'bio', 'birth', 'instagram', 'spotify'])]
@@ -119,6 +120,16 @@ class User extends Authenticatable
     public function postComments(): HasMany
     {
         return $this->hasMany(PostComment::class);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function invitedEvents(): HasMany
+    {
+        return $this->hasMany(EventUser::class);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Livewire\Auth;
 
 use Auth;
-use Illuminate\View\View;
 use Livewire\Component;
 use Session;
 

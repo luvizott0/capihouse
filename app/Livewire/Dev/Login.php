@@ -5,7 +5,6 @@ namespace App\Livewire\Dev;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 

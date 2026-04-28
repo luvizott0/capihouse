@@ -8,4 +8,6 @@
             {{ __('Em breve voce podera criar e acompanhar eventos por aqui.') }}
         </div>
     </div>
+
+    <livewire:app.events.create />
 </section>

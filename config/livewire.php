@@ -69,11 +69,11 @@ return [
     */
 
     'make_command' => [
-        'type'  => 'class', // Options: 'sfc', 'mfc', 'class'
+        'type' => 'class', // Options: 'sfc', 'mfc', 'class'
         'emoji' => false, // Options: true, false
-        'with'  => [
-            'js'   => false,
-            'css'  => false,
+        'with' => [
+            'js' => false,
+            'css' => false,
             'test' => false,
         ],
     ],

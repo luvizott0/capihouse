@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
+use Database\Factories\FeelingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +15,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $emoji
  * @property string|null $deleted_at
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \App\Models\Post|null $posts
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
+ * @property-read Post|null $posts
+ *
  * @method static \Database\Factories\FeelingFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling newQuery()
@@ -27,12 +30,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'color', 'emoji'])]
 class Feeling extends Model
 {
-    /** @use HasFactory<\Database\Factories\FeelingFactory> */
+    /** @use HasFactory<FeelingFactory> */
     use HasFactory;
 
     /**
