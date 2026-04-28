@@ -5,11 +5,15 @@
         </div>
 
         <div class="px-4 py-2 flex flex-col gap-2">
-            <div class="flex gap-2 items-center">
-                <x-icons.outline.cake class="w-4" />
-                <span class="text-sm text-primary-500">{{ $user->birth }}</span>
+            <div class="flex">
+                <span class="text-sm font-normal text-primary-800">"{{ $user->bio ?? __('Diga algo sobre você...') }}"</span>
             </div>
-            <div class="flex"></div>
+
+            <div class="flex gap-2 items-start">
+                <x-icons.outline.cake class="w-4 text-primary-800" />
+                <span class="text-sm text-primary-800">{{ $user->birth?->format('d/m/Y') }}</span>
+            </div>
+
             <div class="flex"></div>
         </div>
     </div>
