@@ -21,7 +21,7 @@ class Index extends Component
 
     public function render(): View
     {
-        $posts = Post::with('user', 'likes', 'comments', 'hashtags', 'feeling')
+        $posts = Post::with('user', 'likes', 'comments', 'hashtags', 'feeling', 'media')
             ->latest()
             ->paginate(10);
 

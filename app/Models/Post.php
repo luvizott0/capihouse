@@ -12,23 +12,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @property int $id
  * @property int $user_id
  * @property string|null $content
- * @property array<array-key, mixed>|null $media
  * @property-read int|null $likes_count
  * @property-read int|null $comments_count
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Collection<int, PostComment> $comments
- * @property-read Feeling|null $feeling
- * @property-read Collection<int, hashtag> $hashtags
+ * @property-read Collection<int, \App\Models\PostComment> $comments
+ * @property-read \App\Models\Feeling|null $feeling
+ * @property-read Collection<int, \App\Models\hashtag> $hashtags
  * @property-read int|null $hashtags_count
- * @property-read Collection<int, PostLike> $likes
- * @property-read User $user
- *
+ * @property-read Collection<int, \App\Models\PostLike> $likes
+ * @property-read Collection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -38,13 +39,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereLikesCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereMedia($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
- *
  * @mixin \Eloquent
  */
-#[Fillable(['user_id', 'content', 'media'])]
+#[Fillable(['user_id', 'content'])]
 class Post extends Model
 {
     /** @use HasFactory<PostFactory> */
@@ -58,7 +57,6 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-            'media' => 'array',
         ];
     }
 
@@ -123,5 +121,10 @@ class Post extends Model
         $this->loadMissing('feeling');
 
         return $this->feeling->name.' '.$this->feeling->emoji;
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'mediable');
     }
 }

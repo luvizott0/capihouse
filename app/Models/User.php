@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -31,22 +32,27 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $bio
  * @property string|null $instagram_url
  * @property string|null $spotify_url
- * @property string|null $birth
+ * @property CarbonImmutable|null $birth
  * @property string|null $remember_token
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
+ * @property-read \App\Models\Media|null $avatar
+ * @property-read \App\Models\Media|null $banner
+ * @property-read Collection<int, \App\Models\Event> $events
+ * @property-read int|null $events_count
+ * @property-read Collection<int, \App\Models\EventUser> $invitedEvents
+ * @property-read int|null $invited_events_count
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection<int, PostComment> $postComments
+ * @property-read Collection<int, \App\Models\PostComment> $postComments
  * @property-read int|null $post_comments_count
- * @property-read Collection<int, PostLike> $postLikes
+ * @property-read Collection<int, \App\Models\PostLike> $postLikes
  * @property-read int|null $post_likes_count
- * @property-read Collection<int, Post> $posts
+ * @property-read Collection<int, \App\Models\Post> $posts
  * @property-read int|null $posts_count
- *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -70,7 +76,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
- *
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'username', 'email', 'banner_url', 'password', 'status', 'bio', 'birth', 'instagram', 'spotify'])]
@@ -95,9 +100,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get the user's initials
-     */
     /**
      * Get the posts for the user.
      */
@@ -130,6 +132,16 @@ class User extends Authenticatable
     public function invitedEvents(): HasMany
     {
         return $this->hasMany(EventUser::class);
+    }
+
+    public function avatar(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'mediable')->where('collection_name', 'avatar');
+    }
+
+    public function banner(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'mediable')->where('collection_name', 'banner');
     }
 
     /**

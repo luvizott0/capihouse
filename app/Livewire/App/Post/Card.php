@@ -47,10 +47,10 @@ class Card extends Component
     public function loadPostInformation(): void
     {
         $this->user = $this->post->user;
-        $this->media = collect($this->post->media ?? [])->map(function ($item) {
+        $this->media = $this->post->media->map(function ($item) {
             return [
-                'type' => $item['type'] ?? 'image',
-                'url' => isset($item['path']) ? Storage::url($item['path']) : ($item['url'] ?? ''),
+                'type' => $item->type->value,
+                'url' => Storage::url($item->path),
             ];
         })->toArray();
         $this->hasMedia = count($this->media) > 0;

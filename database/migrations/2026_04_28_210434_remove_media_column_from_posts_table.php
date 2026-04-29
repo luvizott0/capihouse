@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('media', function (Blueprint $table) {
-            $table->id();
-            $table->string('path');
-            $table->string('type'); // MediaType enum
-            $table->string('collection_name')->nullable();
-            $table->morphs('mediable');
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('media');
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('media');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->json('media')->nullable();
+        });
     }
 };

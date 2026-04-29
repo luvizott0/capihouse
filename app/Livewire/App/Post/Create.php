@@ -2,6 +2,7 @@
 
 namespace App\Livewire\App\Post;
 
+use App\Enums\MediaType;
 use App\Models\hashtag;
 use App\Models\Post;
 use Illuminate\View\View;
@@ -90,20 +91,19 @@ class Create extends Component
 
         $this->validate();
 
-        $mediaPaths = [];
-        foreach ($this->mediaFiles as $file) {
-            $path = $file->store('posts/media', 'public');
-            $mediaPaths[] = [
-                'path' => $path,
-                'type' => str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image',
-            ];
-        }
-
         /** @var Post $post */
         $post = auth()->user()->posts()->create([
             'content' => $this->content,
-            'media' => $mediaPaths,
         ]);
+
+        foreach ($this->mediaFiles as $file) {
+            $path = $file->store('posts/media', 'public');
+            $post->media()->create([
+                'path' => $path,
+                'type' => str_starts_with($file->getMimeType(), 'video') ? MediaType::VIDEO : MediaType::IMAGE,
+                'collection_name' => 'posts',
+            ]);
+        }
 
         $post->feeling()->create([
             'name' => $this->feeling,

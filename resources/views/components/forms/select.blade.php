@@ -11,6 +11,7 @@
     'xl' => false,
     'clearable' => false,
     'showErrors' => false,
+    'multiple' => false,
 ])
 
 @php($name ??= $attributes->wire('model')->value() ?? $attributes->get('name'))
@@ -35,6 +36,7 @@
                  'type' => 'text',
                  'placeholder' => $placeholder,
                  'required' => $required,
+                 'multiple' => $multiple,
              ])->class([
                  'w-full cursor-pointer appearance-none resize-none overflow-hidden py-1.5 pl-2.5 pr-6 text-sm border rounded-sm border-border bg-primary-100 focus:outline-none focus:border-primary-400',
                  'text-xs' => $xs,
