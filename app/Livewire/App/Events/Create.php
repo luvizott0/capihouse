@@ -3,6 +3,7 @@
 namespace App\Livewire\App\Events;
 
 use App\Enums\MediaType;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class Create extends Component
 
     public array $guests = [];
 
-    public ?TemporaryUploadedFile $photo = null;
+    /** @var array<int, TemporaryUploadedFile> */
+    public array $photo = [];
 
     protected function rules(): array
     {
@@ -36,8 +38,7 @@ class Create extends Component
             'description' => ['required', 'string'],
             'date' => ['required', 'date', 'after:now'],
             'guests' => ['nullable', 'array'],
-            'guests.*' => ['exists:users,id'],
-            'photo' => ['nullable', 'image', 'max:5120'], // 5MB max
+            'photo.*' => ['nullable', 'file', 'mimes:png,jpg,jpeg', 'max:20480'], // 20MB max
         ];
     }
 
@@ -47,7 +48,8 @@ class Create extends Component
             'name.required' => 'O nome é obrigatório',
             'description.required' => 'A descrição é obrigatória.',
             'date.required' => 'A data é obrigatória.',
-            'photo.image' => 'O arquivo deve ser uma imagem.',
+            'photo.*.mimes' => 'O arquivo deve ser uma imagem (png, jpg, jpeg, gif).',
+            'photo.*.max' => 'O arquivo não pode ser maior que 20MB.',
             'date.after' => 'A data deve ser uma data futura.',
         ];
 
@@ -55,30 +57,28 @@ class Create extends Component
 
     public function create(): void
     {
+
         $this->validate();
 
         DB::transaction(function () {
+            /** @var Event $event */
             $event = auth()->user()->events()->create([
                 'name' => $this->name,
                 'description' => $this->description,
                 'date' => $this->date,
             ]);
 
-            if ($this->photo) {
-                $path = $this->photo->store('events/photos', 'public');
+            foreach ($this->photo as $file) {
+                $path = $file->store('events/media', 'public');
                 $event->media()->create([
                     'path' => $path,
                     'type' => MediaType::IMAGE,
-                    'collection_name' => 'event_photo',
+                    'collection_name' => 'events',
                 ]);
             }
 
-            foreach ($this->guests as $userId) {
-                $event->users()->create([
-                    'user_id' => $userId,
-                    'status' => 'invited',
-                ]);
-            }
+            $event->guests()->attach(array_column($this->guests, 'id'));
+
         });
 
         $this->reset(['name', 'description', 'date', 'guests', 'photo']);

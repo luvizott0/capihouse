@@ -10,9 +10,17 @@
 
             <x-forms.input wire:model="description" label="Descrição" placeholder="Conte mais sobre o evento..." />
 
-            <x-forms.input wire:model="date" type="datetime-local" label="Data e Hora" />
+            <div class="grid grid-cols-2 gap-2">
+                <x-forms.file-upload
+                    label-alt="Foto do evento"
+                    wire:model="photo"
+                    :media="$photo"
+                />
 
-            <x-forms.select wire:model.live="selectedUser">
+                <x-forms.input wire:model="date" type="datetime-local" label="Data e Hora" />
+            </div>
+
+            <x-forms.select wire:model.live="selectedUser" label="Convidados">
                 <option value="0">{{ __('Selecione os convidados') }}</option>
                 @foreach($this->users() as $user)
                     <option value="{{ $user->id }}">

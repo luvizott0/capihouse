@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -20,10 +21,10 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int $user_id
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property-read Collection<int, User> $guests
+ * @property-read int|null $guests_count
  * @property-read \App\Models\Media|null $media
  * @property-read \App\Models\User $owner
- * @property-read Collection<int, \App\Models\EventUser> $users
- * @property-read int|null $users_count
  * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event newQuery()
@@ -55,13 +56,28 @@ class Event extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function users(): HasMany
+    public function guests(): BelongsToMany
     {
-        return $this->hasMany(EventUser::class);
+        return $this->belongsToMany(
+            User::class,
+            'event_users',
+            'event_id',
+            'user_id'
+        )->withTimestamps();
     }
 
     public function media(): MorphOne
     {
         return $this->morphOne(Media::class, 'mediable');
+    }
+
+    public function getImage(): string
+    {
+        return $this->media()->first()->getUrl();
+    }
+
+    public function getOwnerName(): string
+    {
+        return $this->owner->name;
     }
 }

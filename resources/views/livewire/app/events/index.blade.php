@@ -1,13 +1,14 @@
 <section class="p-4">
-    <div class="overflow-hidden border-2 rounded-xs border-border bg-white">
-        <div class="px-4 py-2 text-sm font-bold tracking-wider text-white uppercase bg-primary">
-            {{ __('Eventos') }}
-        </div>
-
-        <div class="p-4 text-sm text-primary-800">
-            {{ __('Em breve voce podera criar e acompanhar eventos por aqui.') }}
-        </div>
+    <div class="space-y-4">
+        @forelse ($events as $event)
+            <livewire:app.events.card :event="$event" :key="$event->id" />
+        @empty
+            <x-ui.empty-results :message="__('Nenhum evento encontrado. Seja o primeiro a criar um!')" />
+        @endforelse
     </div>
+
+    {{-- Pagination --}}
+    {{ $events->links() }}
 
     <livewire:app.events.create />
 </section>

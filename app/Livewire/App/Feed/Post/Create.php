@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\App\Post;
+namespace App\Livewire\App\Feed\Post;
 
 use App\Enums\MediaType;
 use App\Models\hashtag;
@@ -128,6 +128,6 @@ class Create extends Component
 
     public function render(): View
     {
-        return view('livewire.app.post.create');
+        return view('livewire.app.feed.post.create');
     }
 }

@@ -131,7 +131,7 @@
     <div>
         @if($commentsOpen)
             <div class="border-t border-primary">
-                <livewire:app.post.comments :post="$post"/>
+                <livewire:app.feed.post.comments :post="$post"/>
             </div>
         @endif
     </div>

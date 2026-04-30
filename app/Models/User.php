@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,7 +44,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property-read \App\Models\Media|null $banner
  * @property-read Collection<int, \App\Models\Event> $events
  * @property-read int|null $events_count
- * @property-read Collection<int, \App\Models\EventUser> $invitedEvents
+ * @property-read Collection<int, \App\Models\Event> $invitedEvents
  * @property-read int|null $invited_events_count
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -129,9 +130,14 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
-    public function invitedEvents(): HasMany
+    public function invitedEvents(): BelongsToMany
     {
-        return $this->hasMany(EventUser::class);
+        return $this->belongsToMany(
+            Event::class,
+            'event_users',
+            'user_id',
+            'event_id'
+        )->withTimestamps();
     }
 
     public function avatar(): MorphOne

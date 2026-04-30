@@ -51,4 +51,9 @@ class Media extends Model
     {
         return $this->morphTo();
     }
+
+    public function getUrl(): string
+    {
+        return $this->path;
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\App\Post;
+namespace App\Livewire\App\Feed\Post;
 
 use App\Models\Post;
 use App\Models\User;
@@ -92,6 +92,6 @@ class Card extends Component
 
     public function render(): View
     {
-        return view('livewire.app.post.card');
+        return view('livewire.app.feed.post.card');
     }
 }

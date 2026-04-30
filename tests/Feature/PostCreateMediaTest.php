@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\App\Post\Create;
+use App\Livewire\App\Feed\Post\Create;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

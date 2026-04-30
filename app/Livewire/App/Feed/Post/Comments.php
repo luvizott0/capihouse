@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\App\Post;
+namespace App\Livewire\App\Feed\Post;
 
 use App\Models\Post;
 use Illuminate\Support\Collection;
@@ -117,6 +117,6 @@ class Comments extends Component
 
     public function render(): View
     {
-        return view('livewire.app.post.comments');
+        return view('livewire.app.feed.post.comments');
     }
 }
