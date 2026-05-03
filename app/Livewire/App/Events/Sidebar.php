@@ -2,12 +2,23 @@
 
 namespace App\Livewire\App\Events;
 
+use App\Models\Event;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Sidebar extends Component
 {
-    public function render()
+    public function render(): View
     {
-        return view('livewire.app.events.sidebar');
+        $events = Event::query()
+            ->with(['owner', 'media'])
+            ->where('date', '>=', now())
+            ->orderBy('date')
+            ->take(5)
+            ->get();
+
+        return view('livewire.app.events.sidebar', [
+            'events' => $events,
+        ]);
     }
 }

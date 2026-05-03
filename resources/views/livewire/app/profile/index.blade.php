@@ -10,7 +10,7 @@
     </div>
 
     @forelse ($posts as $post)
-        <livewire:app.post.card :post="$post" :key="$post->id" />
+        <livewire:app.feed.post.card :post="$post" :key="$post->id" />
     @empty
         <x-ui.empty-results :message="__('Nenhum post encontrado neste perfil.')" />
     @endforelse
