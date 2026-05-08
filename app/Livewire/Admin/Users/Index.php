@@ -78,7 +78,7 @@ class Index extends Component
         session()->flash('success', "Usuário {$user->name} rebaixado para usuário comum.");
     }
 
-    #[Layout('components.layouts.admin')]
+    #[Layout('components.layouts.auth')]
     public function render(): View
     {
         $users = User::query()

@@ -22,7 +22,7 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 });
 
-Route::domain('admin.'.parse_url(config('app.url'), PHP_URL_HOST))
+Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {

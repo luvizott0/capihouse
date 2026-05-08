@@ -20,7 +20,7 @@ class UsersSeeder extends Seeder
             'status' => UserStatuses::APPROVED,
         ]);
 
-        User::factory()->create([
+        User::factory()->admin()->create([
             'name' => 'Capivara Rogéria',
             'username' => 'capivara.rogeria',
             'password' => 'password',

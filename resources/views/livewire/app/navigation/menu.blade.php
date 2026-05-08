@@ -12,6 +12,9 @@
     @else
         <div class="grid grid-cols-4 py-2">
             @foreach ($this->menuItems() as $item)
+                @if(data_get($item, 'adminOnly'))
+                    @continue
+                @endif
                 <a
                     href="{{ route(data_get($item, 'route')) }}"
                     wire:navigate

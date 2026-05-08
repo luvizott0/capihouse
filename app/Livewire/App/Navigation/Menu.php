@@ -13,12 +13,18 @@ class Menu extends Component
     #[Computed]
     public function menuItems(): array
     {
-        return [
+        $items = [
             ['route' => 'feed', 'label' => __('Feed'), 'icon' => 'icons.outline.home'],
             ['route' => 'events', 'label' => __('Eventos'), 'icon' => 'icons.outline.calendar'],
             ['route' => 'catalog', 'label' => __('Acervo'), 'icon' => 'icons.outline.book'],
             ['route' => 'profile', 'label' => __('Perfil'), 'icon' => 'icons.outline.user'],
         ];
+
+        if (auth()->user()?->isAdmin()) {
+            $items[] = ['route' => 'admin.users', 'label' => __('Admin'), 'icon' => 'icons.outline.cogs', 'adminOnly' => true];
+        }
+
+        return $items;
     }
 
     public function getRouteName(): string
