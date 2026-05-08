@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property CarbonImmutable|null $updated_at
  * @property-read Collection<int, \App\Models\PostComment> $comments
  * @property-read \App\Models\Feeling|null $feeling
- * @property-read Collection<int, \App\Models\hashtag> $hashtags
+ * @property-read Collection<int, \App\Models\Hashtag> $hashtags
  * @property-read int|null $hashtags_count
  * @property-read Collection<int, \App\Models\PostLike> $likes
  * @property-read Collection<int, \App\Models\Media> $media

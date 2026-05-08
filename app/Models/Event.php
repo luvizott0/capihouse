@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int $user_id
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Collection<int, User> $guests
+ * @property-read Collection<int, \App\Models\User> $guests
  * @property-read int|null $guests_count
  * @property-read \App\Models\Media|null $media
  * @property-read \App\Models\User $owner

@@ -17,14 +17,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property CarbonImmutable|null $updated_at
  * @property-read Collection<int, \App\Models\Post> $posts
  * @property-read int|null $posts_count
- * @method static \Database\Factories\hashtagFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|hashtag whereUpdatedAt($value)
+ * @method static \Database\Factories\HashtagFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Hashtag whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 #[Fillable(['name'])]
