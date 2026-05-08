@@ -1,10 +1,10 @@
 <div class="overflow-hidden border-2 rounded-xs border-border bg-white">
     {{-- Bulletin Header --}}
-    <div class="flex font-mono items-center justify-between px-4 py-2 text-sm font-bold tracking-wider bg-primary text-white border-b border-border uppercase">
+    <div class="flex font-mono items-center justify-between px-4 py-2 text-xs font-bold tracking-wider bg-primary text-white border-b border-border uppercase">
         <span>» {{ __('Publicado') }} {{ $this->getTime() }}</span>
 
         {{-- Actions: Like, Comment, Share --}}
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
             <button wire:click="likePost"
                     class="flex items-center cursor-pointer gap-1 text-sm text-white hover:text-red-500 transition">
                 @if($isLiked)
@@ -25,7 +25,11 @@
                 <span>{{ $post->getLikesCount() }}</span>
             </button>
             <button wire:click="$toggle('commentsOpen')"
-                    class="flex items-center gap-1 text-sm text-white hover:text-primary-800 cursor-pointer transition">
+                    @class([
+                        'flex items-center gap-1 text-sm cursor-pointer transition px-2 py-0.5 rounded-xs',
+                        'text-primary-200 hover:text-primary-100' => ! $commentsOpen,
+                        'bg-primary-200 text-primary-900' => $commentsOpen,
+                    ])>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -33,7 +37,7 @@
                 </svg>
                 <span>{{ $commentsCount }}</span>
             </button>
-            <button class="flex items-center gap-1 text-sm text-white hover:text-primary-800 transition">
+            <button class="flex items-center gap-1 text-sm text-primary-200 hover:text-primary-100 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -46,7 +50,7 @@
                     <button
                         type="button"
                         @click="open = !open"
-                        class="cursor-pointer text-white hover:text-primary-800 transition"
+                        class="cursor-pointer text-primary-200 hover:text-primary-100 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12 12.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12 18.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
@@ -85,13 +89,9 @@
         <div class="flex items-center justify-between mb-2">
             {{-- User Info --}}
             <x-user-info :user="$user" />
-
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2">
-                    <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
-                    <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
-                </div>
-
+            <div class="flex flex-col">
+                <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
+                <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
             </div>
         </div>
 
