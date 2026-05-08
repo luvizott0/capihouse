@@ -120,7 +120,7 @@ class Post extends Model
     {
         $this->loadMissing('feeling');
 
-        return $this->feeling->name.' '.$this->feeling->emoji;
+        return $this->feeling->name . $this->feeling->emoji;
     }
 
     public function media(): MorphMany
