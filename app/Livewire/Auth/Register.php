@@ -52,6 +52,7 @@ class Register extends Component
             'email.max' => 'O e-mail não pode ter mais de 255 caracteres.',
             'email.unique' => 'Este e-mail já está em uso.',
             'password.required' => 'A senha é obrigatória.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
             'password.confirmed' => 'A confirmação de senha não confere.',
         ];
     }
