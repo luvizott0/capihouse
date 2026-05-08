@@ -18,6 +18,7 @@ class UsersSeeder extends Seeder
             'username' => 'luvizotto',
             'password' => 'password',
             'status' => UserStatuses::APPROVED,
+            'birth' => '2001-10-15',
         ]);
 
         User::factory()->admin()->create([
@@ -25,8 +26,11 @@ class UsersSeeder extends Seeder
             'username' => 'capivara.rogeria',
             'password' => 'password',
             'status' => UserStatuses::APPROVED,
+            'birth' => '2023-12-10',
         ]);
 
-        User::factory(10)->create();
+        if (! app()->isProduction()) {
+            User::factory(10)->create();
+        }
     }
 }

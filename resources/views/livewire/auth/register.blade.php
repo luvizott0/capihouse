@@ -17,7 +17,7 @@
                 </div>
                 <div class="p-6 bg-white">
                     <p class="text-sm text-center text-green-700">
-                        {{ __("Seu pedido foi enviado ao administrador. Em breve voce recebera uma resposta.") }}
+                        {{ __("Seu pedido foi enviado ao administrador. Em breve você receberá uma resposta.") }}
                     </p>
                     <div class="mt-4 text-sm text-center">
                         <a href="{{ route("login") }}" wire:navigate class="font-bold underline text-primary-800 hover:text-primary-600">
