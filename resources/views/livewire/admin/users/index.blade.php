@@ -62,7 +62,7 @@
                     @forelse ($users as $user)
                         <tr class="hover:bg-primary-50">
                             <td class="px-4 py-3 font-medium text-primary-900">{{ $user->name }}</td>
-                            <td class="px-4 py-3 text-primary-600">@{{ $user->username }}</td>
+                            <td class="px-4 py-3 text-primary-600">{{ '@' . $user->username }}</td>
                             <td class="px-4 py-3 text-primary-600">{{ $user->email }}</td>
                             <td class="px-4 py-3">
                                 @php
