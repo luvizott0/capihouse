@@ -120,7 +120,7 @@
             @if ($user->interests->isNotEmpty())
                 <div class="flex flex-wrap gap-2">
                     @foreach ($user->interests as $userInterest)
-                        <div class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-[#293b14]">
+                        <div class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-[#344doe]">
                             <span>{{ $userInterest->name }}</span>
 
                             @if ($isOwner)
