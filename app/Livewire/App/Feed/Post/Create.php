@@ -3,7 +3,7 @@
 namespace App\Livewire\App\Feed\Post;
 
 use App\Enums\MediaType;
-use App\Models\hashtag;
+use App\Models\Hashtag;
 use App\Models\Post;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
@@ -111,7 +111,7 @@ class Create extends Component
         ]);
 
         foreach ($this->hashtags as $hashtagName) {
-            $hashtag = hashtag::firstOrCreate(['name' => $hashtagName]);
+            $hashtag = Hashtag::firstOrCreate(['name' => $hashtagName]);
             $post->hashtags()->attach($hashtag);
         }
 
