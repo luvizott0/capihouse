@@ -6,10 +6,10 @@
     'linkToProfile' => true,
 ])
 
-<div @class([
+<div {{ $attributes->class([
     'flex items-center gap-2 mb-3',
     'hover:opacity-90 transition' => $linkToProfile,
-])>
+]) }}>
     <div class="flex items-center justify-center p-4 w-{{ $size }} h-{{ $size }} text-{{ $textSize }} font-bold text-white bg-primary">
         {{ $user->initials() }}
     </div>

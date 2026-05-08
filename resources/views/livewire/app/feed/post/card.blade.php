@@ -86,9 +86,9 @@
     </div>
 
     <div class="px-4 pt-4 pb-2">
-        <div class="flex items-center justify-between mb-2">
+        <div class="mb-2 flex items-start justify-between gap-3">
             {{-- User Info --}}
-            <x-user-info :user="$user" />
+            <x-user-info :user="$user" class="mb-0" />
             <div class="flex flex-col">
                 <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
                 <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
