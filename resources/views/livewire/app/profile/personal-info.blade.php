@@ -121,7 +121,7 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach ($user->interests as $userInterest)
                         <div class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-primary-600">
-                            <span>#{{ $userInterest->name }}</span>
+                            <span>{{ $userInterest->name }}</span>
 
                             @if ($isOwner)
                                 <button
