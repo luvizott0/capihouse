@@ -43,10 +43,16 @@ class Login extends Component
 
         $user = Auth::user();
 
+        if ($user->isBanned()) {
+            Auth::logout();
+            $this->addError('email', __('Sua conta foi banida. Entre em contato com o administrador.'));
+
+            return;
+        }
+
         if (! $user->isApproved()) {
             Auth::logout();
-
-            $this->addError('email', __('Por favor, verifique seu email.'));
+            $this->addError('email', __('Sua conta ainda não foi aprovada pelo administrador.'));
 
             return;
         }

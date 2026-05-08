@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRoles;
 use App\Enums\UserStatuses;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
@@ -101,6 +102,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'status' => UserStatuses::class,
+            'role' => UserRoles::class,
             'birth' => 'date',
         ];
     }
@@ -174,5 +176,20 @@ class User extends Authenticatable
     public function isApproved(): bool
     {
         return $this->status === UserStatuses::APPROVED;
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->status === UserStatuses::BANNED;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === UserStatuses::PENDING;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRoles::Admin;
     }
 }

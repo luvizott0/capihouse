@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRoles;
+use App\Enums\UserStatuses;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +32,8 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'banner_url' => null,
             'email_verified_at' => now(),
+            'status' => UserStatuses::APPROVED,
+            'role' => UserRoles::User,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'two_factor_secret' => null,
@@ -38,6 +42,35 @@ class UserFactory extends Factory
             'bio' => fake()->paragraph(),
             'birth' => fake()->date(),
         ];
+    }
+
+    public function pending(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatuses::PENDING,
+        ]);
+    }
+
+    public function rejected(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatuses::REJECTED,
+        ]);
+    }
+
+    public function banned(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatuses::BANNED,
+        ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatuses::APPROVED,
+            'role' => UserRoles::Admin,
+        ]);
     }
 
     /**
