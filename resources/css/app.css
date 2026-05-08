@@ -38,6 +38,16 @@
     --color-zinc-950: #0a0a0a;
 }
 
+/**
+ * Prevent iOS Safari from auto-zooming when focusing input fields.
+ * Safari zooms in when font-size is below 16px — this ensures it stays at 16px on mobile.
+ */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    input, select, textarea {
+        font-size: 16px;
+    }
+}
+
 ::placeholder {
     color: #847062;
     opacity: 1; /* Ensures full visibility in Firefox */
