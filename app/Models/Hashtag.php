@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @mixin \Eloquent
  */
 #[Fillable(['name'])]
-class hashtag extends Model
+class Hashtag extends Model
 {
     /** @use HasFactory<HashtagFactory> */
     use HasFactory;
