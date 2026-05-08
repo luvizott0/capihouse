@@ -40,20 +40,23 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
- * @property-read \App\Models\Media|null $avatar
- * @property-read \App\Models\Media|null $banner
- * @property-read Collection<int, \App\Models\Event> $events
+ * @property-read Media|null $avatar
+ * @property-read Media|null $banner
+ * @property-read Collection<int, Event> $events
  * @property-read int|null $events_count
- * @property-read Collection<int, \App\Models\Event> $invitedEvents
+ * @property-read Collection<int, Interest> $interests
+ * @property-read int|null $interests_count
+ * @property-read Collection<int, Event> $invitedEvents
  * @property-read int|null $invited_events_count
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection<int, \App\Models\PostComment> $postComments
+ * @property-read Collection<int, PostComment> $postComments
  * @property-read int|null $post_comments_count
- * @property-read Collection<int, \App\Models\PostLike> $postLikes
+ * @property-read Collection<int, PostLike> $postLikes
  * @property-read int|null $post_likes_count
- * @property-read Collection<int, \App\Models\Post> $posts
+ * @property-read Collection<int, Post> $posts
  * @property-read int|null $posts_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -77,9 +80,10 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
+ *
  * @mixin \Eloquent
  */
-#[Fillable(['name', 'username', 'email', 'banner_url', 'password', 'status', 'bio', 'birth', 'instagram', 'spotify'])]
+#[Fillable(['name', 'username', 'email', 'banner_url', 'avatar_url', 'password', 'status', 'bio', 'birth', 'instagram', 'spotify'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -138,6 +142,11 @@ class User extends Authenticatable
             'user_id',
             'event_id'
         )->withTimestamps();
+    }
+
+    public function interests(): BelongsToMany
+    {
+        return $this->belongsToMany(Interest::class)->withTimestamps();
     }
 
     public function avatar(): MorphOne
