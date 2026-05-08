@@ -62,7 +62,7 @@
                 @if (count($hashtags) > 0)
                     <div class="flex flex-wrap gap-2 mt-2">
                         @foreach ($hashtags as $index => $tag)
-                            <div class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white rounded-full bg-primary-600">
+                            <div class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-primary-600">
                                 <span>#{{ $tag }}</span>
                                 <button
                                     type="button"
