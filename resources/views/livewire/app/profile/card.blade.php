@@ -21,7 +21,7 @@
     </div>
 
     <div class="px-4 pb-4">
-        <div class="flex flex-wrap items-end justify-between gap-4 -mt-14">
+        <div class="flex flex-wrap justify-between gap-4 -mt-14">
             <div class="flex items-center gap-4">
                 <div class="relative">
                     @if (filled($user->avatar_url))
@@ -61,8 +61,8 @@
             </div>
 
             @if ($isOwner)
-                <div class="flex items-center gap-2">
-                    <x-icons.outline.cogs class="w-5 cursor-pointer" x-on:click="$dispatch('profile::open-settings-modal')" />
+                <div class="flex items-center mt-4 gap-2">
+                    <x-icons.outline.cogs class="w-6 cursor-pointer text-primary-800" x-on:click="$dispatch('profile::open-settings-modal')" />
                 </div>
             @endif
         </div>
