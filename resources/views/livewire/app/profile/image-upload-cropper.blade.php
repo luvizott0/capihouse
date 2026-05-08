@@ -2,21 +2,13 @@
     $aspectRatio = $type === 'avatar' ? 1 : 3;
     $labelType = $type === 'avatar' ? __('foto de perfil') : __('banner');
     $currentUrl = $type === 'avatar' ? $user->avatar_url : $user->banner_url;
+    $alpineComponent = 'imageCropper_' . $type;
 @endphp
 
 <div
-    x-data="imageCropper({{ $aspectRatio }})"
+    x-data="{{ $alpineComponent }}({{ $aspectRatio }})"
     x-on:profile::close-{{ $type }}-modal.window="reset()"
 >
-    {{-- Hidden file input --}}
-    <input
-        type="file"
-        accept="image/*"
-        class="hidden"
-        x-ref="fileInput"
-        x-on:change="onFileSelected($event)"
-    >
-
     {{-- Current image preview --}}
     @if ($currentUrl)
         <div class="mb-3">
@@ -30,7 +22,7 @@
     @endif
 
     {{-- Cropper area (shown after file selected) --}}
-    <div x-show="imageSrc" x-cloak class="mb-3 border border-border overflow-hidden">
+    <div x-show="imageSrc" x-cloak class="mb-3 border border-border overflow-hidden" style="max-height: 320px;">
         <img
             x-ref="cropperImage"
             x-bind:src="imageSrc"
@@ -45,13 +37,20 @@
 
     {{-- Actions --}}
     <div class="flex items-center gap-2">
-        <button
-            type="button"
-            class="btn-outline text-xs"
-            x-on:click="$refs.fileInput.click()"
-        >
-            {{ __('Selecionar imagem') }}
-        </button>
+        {{-- Styled file input --}}
+        <label class="cursor-pointer flex items-center gap-2 px-3 py-2 text-xs font-medium border border-border bg-primary-100 hover:bg-primary-200 text-subtitle transition-colors">
+            <input
+                type="file"
+                accept="image/*"
+                class="hidden"
+                x-ref="fileInput"
+                x-on:change="onFileSelected($event)"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            <span>{{ __('Selecionar imagem') }}</span>
+        </label>
 
         <button
             type="button"
@@ -69,7 +68,7 @@
 
 @script
 <script>
-    Alpine.data('imageCropper', (aspectRatio) => ({
+    Alpine.data(@js($alpineComponent), (aspectRatio) => ({
         imageSrc: null,
         cropper: null,
         uploading: false,
@@ -95,6 +94,8 @@
                 viewMode: 1,
                 autoCropArea: 1,
                 responsive: true,
+                minContainerHeight: 200,
+                maxContainerHeight: 300,
             });
         },
 
