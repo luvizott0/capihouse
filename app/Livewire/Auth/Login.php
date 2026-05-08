@@ -19,12 +19,25 @@ class Login extends Component
 
     public bool $remember = false;
 
-    public function tryLogin(): void
+    protected function rules(): array
     {
-        $this->validate([
+        return [
             'email' => ['required', 'string'],
             'password' => ['required', 'string'],
-        ]);
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'O e-mail ou nome de usuário é obrigatório.',
+            'password.required' => 'A senha é obrigatória.',
+        ];
+    }
+
+    public function tryLogin(): void
+    {
+        $this->validate();
 
         if ($this->ensureIsNotRateLimited()) {
             return;
