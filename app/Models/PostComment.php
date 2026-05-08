@@ -18,8 +18,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarbonImmutable|null $deleted_at
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read \App\Models\Post $post
- * @property-read \App\Models\User $user
+ * @property-read Post $post
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostCommentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment newQuery()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostComment withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['post_id', 'user_id', 'content'])]

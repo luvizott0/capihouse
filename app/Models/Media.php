@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read Model|\Eloquent $mediable
+ *
  * @method static \Database\Factories\MediaFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media newQuery()
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['path', 'type', 'collection_name', 'mediable_id', 'mediable_type'])]

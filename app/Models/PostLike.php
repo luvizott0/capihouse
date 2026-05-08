@@ -13,8 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read \App\Models\Post $post
- * @property-read \App\Models\User $user
+ * @property-read Post $post
+ * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike query()
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PostLike whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['post_id', 'user_id'])]

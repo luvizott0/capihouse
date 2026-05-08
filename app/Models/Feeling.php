@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $deleted_at
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read \App\Models\Post|null $posts
+ * @property-read Post|null $posts
+ *
  * @method static \Database\Factories\FeelingFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling newQuery()
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Feeling whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'color', 'emoji'])]
