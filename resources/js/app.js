@@ -1,5 +1,9 @@
 import data from '@emoji-mart/data';
 import { Picker } from 'emoji-mart';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+
+window.Cropper = Cropper;
 
 window.emojiPicker = (config = {}) => ({
 	open: false,

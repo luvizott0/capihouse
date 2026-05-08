@@ -76,15 +76,7 @@
             title="Editar banner"
             max-width="lg"
         >
-            <x-forms.input
-                wire:model="bannerUrl"
-                label="URL do banner"
-                placeholder="https://..."
-            />
-
-            <div class="mt-4 flex justify-end">
-                <button type="button" class="btn-primary" wire:click="saveBanner">[ Salvar ]</button>
-            </div>
+            <livewire:app.profile.image-upload-cropper :user="$user" type="banner" :key="'banner-'.$user->id" />
         </x-modal>
 
         <x-modal
@@ -93,15 +85,7 @@
             title="Editar foto de perfil"
             max-width="lg"
         >
-            <x-forms.input
-                wire:model="avatarUrl"
-                label="URL da foto de perfil"
-                placeholder="https://..."
-            />
-
-            <div class="mt-4 flex justify-end">
-                <button type="button" class="btn-primary" wire:click="saveAvatar">[ Salvar ]</button>
-            </div>
+            <livewire:app.profile.image-upload-cropper :user="$user" type="avatar" :key="'avatar-'.$user->id" />
         </x-modal>
     @endif
 </div>
