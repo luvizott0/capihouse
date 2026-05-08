@@ -40,6 +40,44 @@
                           d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0-12.814a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0 12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
                 </svg>
             </button>
+
+            @if($isOwner)
+                <div x-data="{ open: false }" class="relative mt-1">
+                    <button
+                        type="button"
+                        @click="open = !open"
+                        class="cursor-pointer text-white hover:text-primary-800 transition"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12 12.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12 18.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+                        </svg>
+                    </button>
+
+                    <div
+                        x-show="open"
+                        @click.away="open = false"
+                        x-cloak
+                        class="absolute right-0 top-full mt-1 z-30 w-32 border border-border bg-white shadow-md"
+                    >
+                        <button
+                            type="button"
+                            wire:click="editPost"
+                            @click="open = false"
+                            class="block w-full cursor-pointer px-3 py-2 text-left text-sm text-primary-800 hover:bg-primary-100"
+                        >
+                            {{ __('Editar') }}
+                        </button>
+                        <button
+                            type="button"
+                            wire:click="deletePost"
+                            @click="open = false"
+                            class="block w-full cursor-pointer px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50"
+                        >
+                            {{ __('Excluir') }}
+                        </button>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -48,9 +86,12 @@
             {{-- User Info --}}
             <x-user-info :user="$user" />
 
-            <div class="flex items-center gap-2">
-                <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
-                <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold font-mono text-sm text-primary-800">Se sentindo:</span>
+                    <div class="border border-border font-mono text-sm bg-primary-100 pl-2 pr-1 pb-0.5">{{ $post->getMood() }}</div>
+                </div>
+
             </div>
         </div>
 

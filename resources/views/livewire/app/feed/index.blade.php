@@ -11,4 +11,5 @@
 
 
     <livewire:app.feed.post.create />
+    <livewire:app.feed.post.edit />
 </div>

@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -21,6 +22,12 @@ class Index extends Component
     {
         $this->profileUser = $user ?? auth()->user();
         $this->isOwner = auth()->id() === $this->profileUser->id;
+    }
+
+    #[On('profile-posts::reload')]
+    public function reloadPosts(): void
+    {
+        $this->render();
     }
 
     public function render(): View

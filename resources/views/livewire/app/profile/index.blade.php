@@ -16,4 +16,6 @@
     @endforelse
 
     {{ $posts->links() }}
+
+    <livewire:app.feed.post.edit />
 </div>

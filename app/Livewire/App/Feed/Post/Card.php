@@ -23,6 +23,8 @@ class Card extends Component
 
     public bool $isLiked;
 
+    public bool $isOwner = false;
+
     public bool $commentsOpen = false;
 
     public int $commentsCount = 0;
@@ -32,6 +34,7 @@ class Card extends Component
         $this->loadPostInformation();
         $this->verifyIfPostIsLiked();
         $this->commentsCount = $this->post->comments()->count();
+        $this->isOwner = auth()->id() === $this->post->user_id;
     }
 
     #[On('post-comments-updated')]
@@ -88,6 +91,39 @@ class Card extends Component
         ]);
 
         $this->isLiked = true;
+    }
+
+    public function editPost(): void
+    {
+        if (! $this->isOwnerRequest()) {
+            return;
+        }
+
+        $this->dispatch('post::edit', postId: $this->post->id);
+    }
+
+    public function deletePost(): void
+    {
+        if (! $this->isOwnerRequest()) {
+            return;
+        }
+
+        $this->post->loadMissing('media');
+
+        foreach ($this->post->media as $media) {
+            Storage::disk('public')->delete($media->path);
+        }
+
+        $this->post->delete();
+
+        $this->dispatch('posts::reload');
+        $this->dispatch('profile-posts::reload');
+        $this->skipRender();
+    }
+
+    private function isOwnerRequest(): bool
+    {
+        return auth()->id() === $this->post->user_id;
     }
 
     public function render(): View
