@@ -16,7 +16,7 @@
             <img
                 src="{{ $currentUrl }}"
                 alt="{{ $labelType }}"
-                class="border border-border object-cover {{ $type === 'avatar' ? 'w-24 h-24' : 'w-full h-20' }}"
+                class="border border-border object-cover {{ $type === 'avatar' ? 'w-24 h-24' : 'w-full aspect-3/1' }}"
             >
         </div>
     @endif
@@ -34,6 +34,15 @@
     @error('imageFile')
         <p class="text-xs text-red-600 mb-2">{{ $message }}</p>
     @enderror
+
+    {{-- Dimension hint --}}
+    <p class="text-[10px] text-subtitle uppercase tracking-wide mb-2">
+        @if ($type === 'avatar')
+            {{ __('Recomendado: 512 × 512 px') }}
+        @else
+            {{ __('Recomendado: 1200 × 400 px (proporção 3:1)') }}
+        @endif
+    </p>
 
     {{-- Actions --}}
     <div class="flex items-center gap-2">

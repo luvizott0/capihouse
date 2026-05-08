@@ -5,7 +5,7 @@
 @endphp
 
 <div class="overflow-hidden border-2 rounded-sm border-border bg-white">
-    <div class="relative h-28 border-b border-primary" style="{{ $bannerStyle }}">
+    <div class="relative w-full aspect-[3/1] border-b border-primary" style="{{ $bannerStyle }}">
         @if ($isOwner)
             <button
                 type="button"
