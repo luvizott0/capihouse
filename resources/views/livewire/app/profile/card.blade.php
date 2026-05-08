@@ -62,8 +62,7 @@
 
             @if ($isOwner)
                 <div class="flex items-center gap-2">
-                    <a wire:navigate href="{{ route('profile.edit') }}" class="btn-outline text-xs">{{ __('Configuracoes') }}</a>
-                    <a wire:navigate href="{{ route('security.edit') }}" class="btn-outline text-xs">{{ __('Senha') }}</a>
+                    <x-icons.outline.cogs class="w-5 cursor-pointer" x-on:click="$dispatch('profile::open-settings-modal')" />
                 </div>
             @endif
         </div>
@@ -86,6 +85,54 @@
             max-width="lg"
         >
             <livewire:app.profile.image-upload-cropper :user="$user" type="avatar" :key="'avatar-'.$user->id" />
+        </x-modal>
+
+        <x-modal
+            open-event="profile::open-settings-modal"
+            close-event="profile::close-settings-modal"
+            title="Configuracoes da conta"
+            max-width="md"
+            action="saveSettings"
+            action-label="Salvar"
+        >
+            <div class="flex flex-col gap-4">
+                <x-forms.input
+                    wire:model="settingsName"
+                    label="{{ __('Nome') }}"
+                    placeholder="{{ __('Seu nome') }}"
+                    required
+                />
+                <x-forms.input
+                    wire:model="settingsUsername"
+                    label="{{ __('Nome de usuario') }}"
+                    placeholder="{{ __('seu.usuario') }}"
+                    required
+                />
+
+                <div class="border-t border-border pt-4">
+                    <p class="text-xs font-bold uppercase tracking-wider text-primary-700 mb-3">{{ __('Alterar senha') }}</p>
+                    <div class="flex flex-col gap-4">
+                        <x-forms.input
+                            wire:model="settingsCurrentPassword"
+                            type="password"
+                            label="{{ __('Senha atual') }}"
+                            placeholder="{{ __('••••••••') }}"
+                        />
+                        <x-forms.input
+                            wire:model="settingsPassword"
+                            type="password"
+                            label="{{ __('Nova senha') }}"
+                            placeholder="{{ __('••••••••') }}"
+                        />
+                        <x-forms.input
+                            wire:model="settingsPasswordConfirmation"
+                            type="password"
+                            label="{{ __('Confirmar nova senha') }}"
+                            placeholder="{{ __('••••••••') }}"
+                        />
+                    </div>
+                </div>
+            </div>
         </x-modal>
     @endif
 </div>

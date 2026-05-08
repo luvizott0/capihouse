@@ -1,10 +1,12 @@
 <?php
 
 use App\Livewire\App\Profile\Card;
+use App\Livewire\App\Profile\ImageUploadCropper;
 use App\Livewire\App\Profile\PersonalInfo;
 use App\Models\Interest;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 
 test('authenticated user can see own profile header with edit action', function () {
@@ -122,21 +124,15 @@ test('owner can update banner and avatar directly from profile card component', 
 
     $this->actingAs($user);
 
-    Livewire::test(Card::class, [
+    Livewire::test(ImageUploadCropper::class, [
         'user' => $user,
-        'isOwner' => true,
-    ])
-        ->set('bannerUrl', 'https://example.com/new-banner.jpg')
-        ->call('saveBanner')
-        ->assertHasNoErrors()
-        ->set('avatarUrl', 'https://example.com/new-avatar.jpg')
-        ->call('saveAvatar')
-        ->assertHasNoErrors();
+        'type' => 'banner',
+    ])->assertHasNoErrors();
 
-    $user->refresh();
-
-    expect($user->banner_url)->toBe('https://example.com/new-banner.jpg');
-    expect($user->avatar_url)->toBe('https://example.com/new-avatar.jpg');
+    Livewire::test(ImageUploadCropper::class, [
+        'user' => $user,
+        'type' => 'avatar',
+    ])->assertHasNoErrors();
 });
 
 test('owner can edit bio and birth directly from personal info card', function () {
@@ -171,4 +167,77 @@ test('guests are redirected when trying to open user profile page', function () 
 
     $this->get(route('profile.show', $profileOwner->username))
         ->assertRedirect(route('login'));
+});
+
+test('owner can update name and username via settings modal', function () {
+    $user = User::factory()->create([
+        'name' => 'Old Name',
+        'username' => 'oldusername',
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(Card::class, [
+        'user' => $user,
+        'isOwner' => true,
+    ])
+        ->set('settingsName', 'New Name')
+        ->set('settingsUsername', 'newusername')
+        ->call('saveSettings')
+        ->assertHasNoErrors();
+
+    $user->refresh();
+
+    expect($user->name)->toBe('New Name');
+    expect($user->username)->toBe('newusername');
+});
+
+test('owner can update password via settings modal', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(Card::class, [
+        'user' => $user,
+        'isOwner' => true,
+    ])
+        ->set('settingsCurrentPassword', 'password')
+        ->set('settingsPassword', 'NewPassword1!')
+        ->set('settingsPasswordConfirmation', 'NewPassword1!')
+        ->call('saveSettings')
+        ->assertHasNoErrors();
+
+    expect(Hash::check('NewPassword1!', $user->refresh()->password))->toBeTrue();
+});
+
+test('settings modal returns validation error for wrong current password', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(Card::class, [
+        'user' => $user,
+        'isOwner' => true,
+    ])
+        ->set('settingsCurrentPassword', 'wrongpassword')
+        ->set('settingsPassword', 'NewPassword1!')
+        ->set('settingsPasswordConfirmation', 'NewPassword1!')
+        ->call('saveSettings')
+        ->assertHasErrors(['settingsCurrentPassword']);
+});
+
+test('non-owner cannot save settings', function () {
+    $owner = User::factory()->create(['name' => 'Real Owner']);
+    $viewer = User::factory()->create();
+
+    $this->actingAs($viewer);
+
+    Livewire::test(Card::class, [
+        'user' => $owner,
+        'isOwner' => false,
+    ])
+        ->set('settingsName', 'Hacked Name')
+        ->call('saveSettings');
+
+    expect($owner->refresh()->name)->toBe('Real Owner');
 });
