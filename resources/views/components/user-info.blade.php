@@ -10,8 +10,18 @@
     'flex items-center gap-2 mb-3',
     'hover:opacity-90 transition' => $linkToProfile,
 ]) }}>
-    <div class="flex items-center justify-center p-4 w-{{ $size }} h-{{ $size }} text-{{ $textSize }} font-bold text-white bg-primary">
-        {{ $user->initials() }}
+    <div class="flex-shrink-0 w-{{ $size }} h-{{ $size }} overflow-hidden">
+        @if (filled($user->avatar_url))
+            <img
+                src="{{ e($user->avatar_url) }}"
+                alt="{{ $user->name }}"
+                class="w-full h-full object-cover"
+            />
+        @else
+            <div class="flex items-center justify-center w-full h-full text-{{ $textSize }} font-bold text-white bg-primary">
+                {{ $user->initials() }}
+            </div>
+        @endif
     </div>
     <div>
         @if($showName)

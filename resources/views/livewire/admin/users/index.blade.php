@@ -137,6 +137,14 @@
                                             class="px-2 py-1 text-xs font-bold text-orange-800 bg-orange-100 hover:bg-orange-200 cursor-pointer"
                                         >↓ Revogar</button>
                                     @endif
+
+                                    @if ($user->id !== auth()->id())
+                                        <button
+                                            wire:click="delete({{ $user->id }})"
+                                            wire:confirm="Excluir permanentemente {{ $user->name }}? Esta ação não pode ser desfeita."
+                                            class="px-2 py-1 text-xs font-bold text-white bg-red-800 hover:bg-red-900 cursor-pointer"
+                                        >✕ Excluir</button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

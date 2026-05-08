@@ -71,3 +71,25 @@ it('admin can unban a banned user', function () {
 
     expect($user->fresh()->status)->toBe(UserStatuses::APPROVED);
 });
+
+it('admin can delete another user', function () {
+    $admin = User::factory()->admin()->create();
+    $user = User::factory()->create();
+
+    Livewire::actingAs($admin)
+        ->test(Index::class)
+        ->call('delete', $user->id);
+
+    expect(User::find($user->id))->toBeNull();
+});
+
+it('admin cannot delete their own account', function () {
+    $admin = User::factory()->admin()->create();
+
+    Livewire::actingAs($admin)
+        ->test(Index::class)
+        ->call('delete', $admin->id);
+
+    expect(User::find($admin->id))->not->toBeNull();
+});
+

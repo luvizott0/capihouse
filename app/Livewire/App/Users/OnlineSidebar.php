@@ -2,6 +2,7 @@
 
 namespace App\Livewire\App\Users;
 
+use App\Enums\UserStatuses;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -28,7 +29,8 @@ class OnlineSidebar extends Component
         $onlineUserIds = $this->getOnlineUserIds();
 
         $siteUsers = User::query()
-            ->select(['id', 'name', 'username'])
+            ->select(['id', 'name', 'username', 'avatar_url'])
+            ->where('status', UserStatuses::APPROVED)
             ->orderBy('name')
             ->get();
 

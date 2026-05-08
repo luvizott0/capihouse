@@ -78,6 +78,22 @@ class Index extends Component
         session()->flash('success', "Usuário {$user->name} rebaixado para usuário comum.");
     }
 
+    public function delete(int $userId): void
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->id === auth()->id()) {
+            session()->flash('success', 'Você não pode excluir sua própria conta.');
+
+            return;
+        }
+
+        $name = $user->name;
+        $user->delete();
+
+        session()->flash('success', "Usuário {$name} excluído permanentemente.");
+    }
+
     #[Layout('components.layouts.auth')]
     public function render(): View
     {
