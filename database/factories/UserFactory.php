@@ -27,9 +27,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'username' => fake()->unique()->userName(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'username' => $this->faker->unique()->userName(),
+            'email' => $this->faker->unique()->safeEmail(),
             'banner_url' => null,
             'email_verified_at' => now(),
             'status' => UserStatuses::APPROVED,
@@ -39,8 +39,8 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
-            'bio' => fake()->paragraph(),
-            'birth' => fake()->date(),
+            'bio' => $this->faker->paragraph(),
+            'birth' => $this->faker->date(),
         ];
     }
 
