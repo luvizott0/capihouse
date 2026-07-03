@@ -22,15 +22,14 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property-read int|null $comments_count
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Collection<int, PostComment> $comments
- * @property-read Feeling|null $feeling
- * @property-read Collection<int, Hashtag> $hashtags
+ * @property-read Collection<int, \App\Models\PostComment> $comments
+ * @property-read \App\Models\Feeling|null $feeling
+ * @property-read Collection<int, \App\Models\Hashtag> $hashtags
  * @property-read int|null $hashtags_count
- * @property-read Collection<int, PostLike> $likes
- * @property-read Collection<int, Media> $media
+ * @property-read Collection<int, \App\Models\PostLike> $likes
+ * @property-read Collection<int, \App\Models\Media> $media
  * @property-read int|null $media_count
- * @property-read User $user
- *
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -42,7 +41,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereLikesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
- *
  * @mixin \Eloquent
  */
 #[Fillable(['user_id', 'content'])]

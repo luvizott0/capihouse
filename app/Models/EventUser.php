@@ -16,9 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Event $event
- * @property-read User $user
- *
+ * @property-read \App\Models\Event $event
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\EventUserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser newQuery()
@@ -29,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereUserId($value)
- *
  * @mixin \Eloquent
  */
 #[Fillable(['event_id', 'user_id', 'status'])]

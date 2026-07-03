@@ -20,11 +20,10 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int $user_id
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Collection<int, User> $guests
+ * @property-read Collection<int, \App\Models\User> $guests
  * @property-read int|null $guests_count
- * @property-read Media|null $media
- * @property-read User $owner
- *
+ * @property-read \App\Models\Media|null $media
+ * @property-read \App\Models\User $owner
  * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event newQuery()
@@ -36,7 +35,6 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Event whereUserId($value)
- *
  * @mixin \Eloquent
  */
 #[Fillable(['name', 'description', 'date', 'user_id'])]

@@ -13,21 +13,15 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Calebe Luvizotto',
-            'username' => 'luvizotto',
-            'password' => 'password',
-            'status' => UserStatuses::APPROVED,
-            'birth' => '2001-10-15',
-        ]);
-
-        User::factory()->admin()->create([
+        $user = User::create([
             'name' => 'Capivara Rogéria',
             'username' => 'capivara.rogeria',
             'password' => 'password',
             'status' => UserStatuses::APPROVED,
             'birth' => '2023-12-10',
         ]);
+
+        $user
 
         if (! app()->isProduction()) {
             User::factory(10)->create();
