@@ -20,6 +20,7 @@ window.emojiPicker = (config = {}) => ({
 
 	close() {
 		this.open = false;
+		this.pickerMounted = false;
 	},
 
 	mountPicker() {
@@ -27,37 +28,36 @@ window.emojiPicker = (config = {}) => ({
 			return;
 		}
 
-		const container = this.$refs.picker;
+		const isMobile = !window.matchMedia('(min-width: 640px)').matches;
+		const container = isMobile ? this.$refs.pickerMobile : this.$refs.picker;
 
 		if (!container) {
 			return;
 		}
 
-		const picker = new Picker({
-			data,
-			locale: 'pt',
-			onEmojiSelect: (selectedEmoji) => {
-				const emoji = selectedEmoji?.native;
+		const onEmojiSelect = (selectedEmoji) => {
+			const emoji = selectedEmoji?.native;
 
-				if (!emoji || !config.target) {
-					return;
-				}
+			if (!emoji || !config.target) {
+				return;
+			}
 
-				this.label = emoji;
+			this.label = emoji;
 
-				const component = this.resolveLivewireComponent();
+			const component = this.resolveLivewireComponent();
 
-				if (!component) {
-					return;
-				}
+			if (!component) {
+				return;
+			}
 
-				component.set(config.target, emoji);
+			component.set(config.target, emoji);
 
-				if (config.closeOnSelect ?? true) {
-					this.close();
-				}
-			},
-		});
+			if (config.closeOnSelect ?? true) {
+				this.close();
+			}
+		};
+
+		const picker = new Picker({ data, locale: 'pt', onEmojiSelect });
 
 		container.innerHTML = '';
 		container.appendChild(picker);
