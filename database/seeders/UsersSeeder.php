@@ -16,6 +16,7 @@ class UsersSeeder extends Seeder
     {
         User::create([
             'name' => 'Capivara Rogéria',
+            'email' => 'capivara@rogeria.com',
             'username' => 'capivara.rogeria',
             'password' => 'password',
             'status' => UserStatuses::APPROVED,
